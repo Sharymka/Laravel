@@ -33,5 +33,5 @@ Route::get('/news', function (): string {
 });
 
 Route::get('/news/{id}', function (int $id): string {
-    return "Страница для вывода одной новости: $id";
+    return "Страницa для вывода одной новости: $id";
 });
