@@ -34,7 +34,11 @@ Route::get('/news', [
 Route::get('/news/{id}/show', [\App\Http\Controllers\NewsController::class , 'showOne'])
 ->name('showOne')->where('id', "\d+");
 
-Route::get('/', ['uses' => "App\Http\Controllers\HomeController@index"]);
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])
+->name('home');
+
+Route::get('/main', [App\Http\Controllers\MainController::class, 'index'])
+    ->name('main');
 
 Route::get('/welcome', [
     'uses' => "App\Http\Controllers\WelcomeController@index",

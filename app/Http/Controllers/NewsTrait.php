@@ -16,7 +16,8 @@ trait NewsTrait
                    'name'=> \fake()->jobTitle(),
                    'description' => \fake()->text(100),
                    'author' => \fake()->userName(),
-                   'created_at' =>now()->format('d-m-y h:i')
+                   'created_at' =>now()->format('d-m-y h:i'),
+                   'isPrivate' => fake()->boolean()
                ];
            }
            return $news;
@@ -27,7 +28,8 @@ trait NewsTrait
            'name'=> \fake()->jobTitle(),
            'description' => \fake()->text(100),
            'author' => \fake()->userName(),
-           'created_at' => now()->format('d-m-y h:i')
+           'created_at' => now()->format('d-m-y h:i'),
+           'isPrivate' => fake()->boolean()
        ];
    }
 }

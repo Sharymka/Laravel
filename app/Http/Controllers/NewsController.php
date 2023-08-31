@@ -29,8 +29,12 @@ class NewsController extends Controller
         $news = $this->getNews();
         dump($news);
 
-        return \view('news.index',
+//        return \view('news.index',
+//        ['news' => $news]);
+
+        return \view('news',
         ['news' => $news]);
+
     }
 
     public function showOne($id) {

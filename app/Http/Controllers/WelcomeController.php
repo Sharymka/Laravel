@@ -11,7 +11,7 @@ class WelcomeController extends Controller
         return <<<php
          <h1> Добро пожаловать в агрегатор новостей</h1>
         Тут какой-то текст</br>
-    <a href = "/"> Переход на админ страницу</a>
+    <a href =<?=route('')?>> Перейти</a>
     php;
     }
 }
