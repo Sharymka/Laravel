@@ -1,8 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Admin\IndexController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,11 +12,6 @@ use App\Http\Controllers\Admin\IndexController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
 
 Route::get('/hello/{name}', function (string $name): string {
     return "Hello, {$name}";
@@ -35,13 +28,11 @@ Route::get('/news/add', [
 ]);
 
 Route::get('/news', [
-    'uses' => '\App\Http\Controllers\NewsController@news',
-    'as' => 'news'
-]);
+     \App\Http\Controllers\NewsController::class, 'index'])
+    ->name('news');
 
-Route::get('/news/{id}/{name}.html', [
-    'uses' => '\App\Http\Controllers\NewsController@newsOne',
-    'as' => 'newsOne']);
+Route::get('/news/{id}/show', [\App\Http\Controllers\NewsController::class , 'showOne'])
+->name('showOne')->where('id', "\d+");
 
 Route::get('/', ['uses' => "App\Http\Controllers\HomeController@index"]);
 

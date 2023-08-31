@@ -6,67 +6,63 @@ use Illuminate\Http\Request;
 
 class NewsController extends Controller
 {
-    private array $news = [
-        [
-            'id' => 1,
-            'title' => 'Привет из космоса',
-            'inform' => 'Нам до луны как до луны'
-        ],
-        [
-            'id' => 2,
-            'title' => 'Опять дождь',
-            'inform' => 'Мокрые лужи на асфальте'
-        ],
-        [
-            'id' => 3,
-            'title' => 'Электричка',
-            'inform' => 'Опять от меня сбежала последняя электричка'
-        ]
-    ];
+    use NewsTrait;
+//    private array $news = [
+//        [
+//            'id' => 1,
+//            'title' => 'Привет из космоса',
+//            'inform' => 'Нам до луны как до луны'
+//        ],
+//        [
+//            'id' => 2,
+//            'title' => 'Опять дождь',
+//            'inform' => 'Мокрые лужи на асфальте'
+//        ],
+//        [
+//            'id' => 3,
+//            'title' => 'Электричка',
+//            'inform' => 'Опять от меня сбежала последняя электричка'
+//        ]
+//    ];
 
-    public function news()
-    {
-        $html = "<h1>Новости </h1>";
-        foreach ($this->news as $news) {
-            $NameRoute = route('newsOne', [$news['id'], 'TestParams'.$news['id']] );
-            dump($NameRoute);
-            $html .= <<<php
-        <h2>
-            <a href = "{$NameRoute}">
-            {$news['title']}</a>
-        </h2>
-        <div>{$news["inform"]}</div>
-        <hr>
-    php;
-        }
-        return $html;
+    public function index() {
+        $news = $this->getNews();
+        dump($news);
+
+        return \view('news.index',
+        ['news' => $news]);
     }
 
-    public function newsOne($id) {
+    public function showOne($id) {
 
-        $news = $this->getNewsById($id);
+        $news = $this->getNews();
 
-        $NameRoute = route('news');
+        $NameRoute = route('showOne', $id);
         dump($NameRoute);
 
-        if(!empty($news)) {
-            return <<<php
-        <h1>{$news['title']}</h1>
-        <div>{$news['inform']}</div>
-        <a href = "{$NameRoute}">Назад</a>
-        php;
-        }
-        return redirect("{$NameRoute}");
+
+            return \view('news.show',
+                ['news' => $news[$id]]);
+
+
+//        if(!empty($news)) {
+//            return <<<php
+//        <h1>{$news['title']}</h1>
+//        <div>{$news['inform']}</div>
+//        <a href = "{$NameRoute}">Назад</a>
+//        php;
+//        }
+//        return redirect("{$NameRoute}");
     }
 
-    private function getNewsById($id) {
-        foreach ($this->news as $news) {
-            if($news['id'] == $id) {
-                return $news;
-            }
-        }
-        return [];
-    }
+//    private function getNewsById($id) {
+//        foreach ($this->news as $news) {
+//            if($news['id'] == $id) {
+//                return $news;
+//            }
+//        }
+//        return [];
+//    }
 
     public function newsAdd() {
         return<<<php
