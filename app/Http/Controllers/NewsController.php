@@ -27,12 +27,12 @@ class NewsController extends Controller
 
     public function index() {
         $news = $this->getNews();
-        dump($news);
+//        dump($news);
 
 //        return \view('news.index',
 //        ['news' => $news]);
 
-        return \view('news',
+        return \view('newstest',
         ['news' => $news]);
 
     }
@@ -45,7 +45,7 @@ class NewsController extends Controller
         dump($NameRoute);
 
 
-            return \view('news.show',
+            return \view('newsShow',
                 ['news' => $news[$id]]);
 
 

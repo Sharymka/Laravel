@@ -52,9 +52,9 @@ Route::get('/categories/{name}', [
     'uses' => "App\Http\Controllers\CategoriesController@category",
     'as' => 'category']);
 
-Route::get('/signin', [
-    'uses' => "App\Http\Controllers\AuthorizationController@signIn",
-    'as' => 'signin']);
+Route::get('/authorization',
+    [App\Http\Controllers\AuthorizationController::class, 'authorization'])
+    ->name('authorization');
 
 Route::group(
   [
