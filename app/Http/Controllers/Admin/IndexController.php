@@ -9,7 +9,7 @@ use Illuminate\Routing\Route;
 class IndexController extends Controller
 {
     public function index(){
-     return \view('admin.index');
+     return \view('admin.admin');
 //        return <<<php
 //        <h1> точка входа админа</h1>
 //        Тут какой-то текст</br>
@@ -21,7 +21,7 @@ class IndexController extends Controller
 //    php;
     }
     public function test1(){
-        $route = route('admin.index');
+        $route = route('admin.admin');
         dump($route);
         return <<<php
         <h1> test1</h1>
@@ -32,7 +32,7 @@ class IndexController extends Controller
     }
 
     public function test2(){
-        $route = route('admin.index');
+        $route = route('admin.admin');
         dump($route);
         return <<<php
         <h1> test2</h1>

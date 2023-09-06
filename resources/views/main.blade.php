@@ -20,6 +20,9 @@
     <link href="/bootstrap-5.3.1/assets/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href ="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css">
     <link href ="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js">
+    <link rel="icon" href="bootstrap-4.0.0/favicon.ico">
+    <link href="bootstrap-4.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap-4.0.0/docs/4.0/examples/sign-in/sign-in.css" rel="stylesheet">
 </head>
 <body class="d-flex flex-column h-100">
 <header class="p-3 text-bg-dark">
@@ -31,8 +34,8 @@
 
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                 <li><a href="{{route('home')}}" class="nav-link px-2 text-secondary">Home</a></li>
-                <li><a href="{{route('admin.index')}}" class="nav-link px-2 text-white">Admin</a></li>
-                <li><a href="{{route('news')}}" class="nav-link px-2 text-white">News</a></li>
+                <li><a href="{{route('admin.admin')}}" class="nav-link px-2 text-white">Admin</a></li>
+                <li><a href="{{route('categories')}}" class="nav-link px-2 text-white">News</a></li>
             </ul>
 
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
@@ -40,8 +43,8 @@
             </form>
 
             <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2">Login</button>
-                <button type="button" class="btn btn-warning">Sign-up</button>
+                <a href="{{route('authorization')}}" type="button" class="btn btn-outline-light me-2">Sign-in</a>
+                <a href="" type="button" class="btn btn-warning">Sign-up</a>
             </div>
         </div>
     </div>

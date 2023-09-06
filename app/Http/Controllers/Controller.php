@@ -8,56 +8,41 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
+    public array $categories;
+    public array $news;
     use AuthorizesRequests, ValidatesRequests;
+    use CategoriesTrait;
+    use NewsTrait;
 
-    private array $categories =
-        [
-            'weather' => [
-                'Что ожидает нас в ближайший год',
-                'Глобальное потепление',
-                'Самое большое количество отсадков за последние 50 лет',
-                'Снежные вершины'
-            ],
-            'in the animal world' => [
-                'В зоопарке родился носорог',
-                '5 маленьких котят ищут новые семьи',
-                'Медвеженок Барни существует',
-                'Нашествие саранчи привело людей в замешательство'
-            ],
-            'dialogues about fishing' => [
-                'Ловись рыбка большая и мельнкая',
-                'Где лучше клюет',
-                'Рыбацкие истороии',
-                'Русалки существуют'
-            ],
-            'space' => [
-                'Полетели, полетели на луну не сели',
-                'Жили-были в предалеком царстве',
-                'Млечный путь',
-                ' Скоро звездопар'
-            ],
-            'New Year' => [
-                'Скоро новый год',
-                'Рождество, где провести?',
-                'Дедушка мороз заболел',
-                'Огромный питомкик живых елочек'
-            ]
-        ];
+   public function getCategories():array {
+       $this->categories = $this->createCategories();
 
-    function categories() {
-        return array_keys($this->categories);
+       return $this->categories;
     }
 
-    function category($categoryName) {
-        foreach ($this->categories as $name => $news) {
-            if($name == $categoryName) {
-                return $news;
-            }
+    private function generateNews() {
+        foreach ($this->categories as $key => $blockOfNews) {
+            $this->news[$blockOfNews['name']] = $this->createNews();
         }
     }
-    function categories2() {
-        return [
 
-        ];
+    public function getBlockOfNews($categoryName) {
+        $news = $this->createNews();
+//        foreach ($news as $name => $blockOfNews) {
+//            if($name == $categoryName) {
+//                return $blockOfNews;
+//            }
+//        }
+        return $news;
+    }
+
+    public function getOneNews($categoryName, $newsId) {
+        $blockOfNews =  $this->getBlockOfNews($categoryName);
+            foreach ($blockOfNews as $oneNews) {
+                if($oneNews['id'] == $newsId) {
+                    return $oneNews;
+                }
+            }
+        return null;
     }
 }

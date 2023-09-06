@@ -1,11 +1,10 @@
 @extends('main')
 
 @section('title')
-    @parent news
+    @parent newsCategories
 @endsection
 
 @section('content')
-
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
         <symbol id="calendar-event" viewBox="0 0 16 16">
             <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
@@ -21,31 +20,20 @@
             <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z"/>
         </symbol>
     </svg>
-
     <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
-    <div class="list-group">
-    @forelse($news as $oneNews)
-            <div href="" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
-                <div class="d-flex gap-2 w-100 justify-content-between">
-                    <div>
-                        <h6 class="mb-0">{{$oneNews["name"]}}</h6>
-                        <p class="mb-0 opacity-75">{{$oneNews["description"]}}</p>
-                        <p class="mb-0 opacity-75">{{$oneNews["author"]}}</p>
-                        @if(!$oneNews["isPrivate"])
-                            <p>
-                            <a href = "{{route('showOne', [$oneNews['id']])}}" class="opacity-50 text-nowrap" >Подробнее...</a>
-                        </p>
-                        @endif
+        <div class="list-group">
+            @foreach($categories as $category)
+                <a href= "{{route('blockOfNews', [$category['name']])}}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                    <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+                    <div class="d-flex gap-2 w-100 justify-content-between">
+                        <div>
+                            <h6 class="mb-0">{{$category["name"]}}</h6>
+                        </div>
+                        <small class="opacity-50 text-nowrap">{{$category["id"]}}</small>
+                        <hr>
                     </div>
-                    <small class="opacity-50 text-nowrap">{{$oneNews["created_at"]}}</small>
-                    <hr>
-                </div>
-            </div>
-        @empty
-            <h1>Нет новостей </h1>
-    @endforelse
+                </a>
+            @endforeach
+        </div>
     </div>
-</div>
 @endsection
-
