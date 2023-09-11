@@ -39,12 +39,15 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])
 Route::get('/categories', [App\Http\Controllers\CategoriesController::class, 'categories'])
     ->name('categories');
 
-Route::get('/blockOfNews/{categoryName}', [
+Route::get('/blockOfNews/{categoryId}', [
     \App\Http\Controllers\NewsController::class, 'blockOfNews'])
-    ->name('blockOfNews');
+    ->name('blockOfNews')->where('categoryId',"\d+");;
 
-Route::get('/news/showOne/{categotyName}/{newsId}', [\App\Http\Controllers\NewsController::class , 'showOne'])
-->name('showOne')->where('newsId',"\d+");
+Route::get('/news/showOne/{categoryId}/{newsId}', [\App\Http\Controllers\NewsController::class , 'showOne'])
+->name('showOne')->where('newsId',"\d+")->where('categoryId',"\d+");
+
+Route::match(['get', 'post'], '/addNews', [\App\Http\Controllers\NewsController::class , 'addNews'])
+    ->name('addNews');
 
 //Route::get('/news/add', [
 //    'uses' => '\App\Http\Controllers\NewsController@newsAdd',
@@ -55,9 +58,8 @@ Route::get('/authorization',
     [App\Http\Controllers\AuthorizationController::class, 'authorization'])
     ->name('authorization');
 
-Route::get('/test', function () {
-    return 'такой ответ ..';
-});
+Route::match(['get', 'post'],'/blockOfNews/addNews', [App\Http\Controllers\NewsController::class, 'addNews'])
+    ->name('addNews');
 
 Route::group(
     [

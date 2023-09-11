@@ -26,7 +26,9 @@
 </head>
 <body class="d-flex flex-column h-100">
 <header class="p-3 text-bg-dark">
-
+{{--    <div class="container">--}}
+{{--        @yield('header')--}}
+{{--    </div>--}}
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
@@ -50,13 +52,9 @@
         </div>
     </div>
 </header>
-    <header class="header">
-        @yield('header')
-    </header>
     <div class="container">
         @yield('content')
     </div>
-
 <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
     <symbol id="bootstrap" viewBox="0 0 118 94">
         <title>Bootstrap</title>

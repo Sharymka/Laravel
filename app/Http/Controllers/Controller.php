@@ -8,11 +8,10 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    public array $categories;
-    public array $news;
     use AuthorizesRequests, ValidatesRequests;
     use CategoriesTrait;
     use NewsTrait;
+    use StorageNews;
 
    public function getCategories():array {
        $this->categories = $this->createCategories();
@@ -20,24 +19,13 @@ class Controller extends BaseController
        return $this->categories;
     }
 
-    private function generateNews() {
-        foreach ($this->categories as $key => $blockOfNews) {
-            $this->news[$blockOfNews['name']] = $this->createNews();
-        }
+    public function getBlockOfNews($categoryId) {
+        $this->news = $this->createNews($categoryId);
+        return $this->news;
     }
 
-    public function getBlockOfNews($categoryName) {
-        $news = $this->createNews();
-//        foreach ($news as $name => $blockOfNews) {
-//            if($name == $categoryName) {
-//                return $blockOfNews;
-//            }
-//        }
-        return $news;
-    }
-
-    public function getOneNews($categoryName, $newsId) {
-        $blockOfNews =  $this->getBlockOfNews($categoryName);
+    public function getOneNews($categoryId, $newsId) {
+        $blockOfNews =  $this->getBlockOfNews($categoryId);
             foreach ($blockOfNews as $oneNews) {
                 if($oneNews['id'] == $newsId) {
                     return $oneNews;

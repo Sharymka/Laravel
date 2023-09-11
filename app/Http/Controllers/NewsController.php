@@ -8,32 +8,34 @@ class NewsController extends Controller
 {
     use NewsTrait;
 
-    public function blockOfNews($categoryName) {
+    public function blockOfNews($categoryId) {
 
-         $blockOfNews = parent::getBlockOfNews($categoryName);
+         $blockOfNews = parent::getBlockOfNews($categoryId);
 
         return \view('news',
-            ['blockOfNews' => $blockOfNews, 'categoryName' => $categoryName]);
+            ['blockOfNews' => $blockOfNews, 'categoryId' => $categoryId]);
 
 
     }
 
-    public function showOne($categoryName, $newsId)
+    public function showOne($categoryId, $newsId)
     {
 
-        $oneNews = parent::getOneNews($categoryName, $newsId);
+        $oneNews = parent::getOneNews($categoryId, $newsId);
         return \view('oneNews',
-            ['oneNews' => $oneNews, 'categoryName' => $categoryName]);
+            ['oneNews' => $oneNews, 'categoryId' => $categoryId]);
 
     }
-
-    public function addNews(Request $request) {
-//        dump($request);
-        if($request->isMethod('post')) {
-            $request->flash();
-            redirect()->route('admin.addNews');
+        public function addNews(Request $request)
+        {
+//            dump($request->all());
+            $title = $request->input('title');
+            $description = $request->input('description');
+            $category_id = $request->input('category_id');
+            $news = $this->createOneNews($category_id, $title, $description);
+            $this->setNews($news);
+            $oneNews = $this->getNews();
+//            dump($oneNews);
+            return view('oneNews', ['oneNews' => $oneNews, 'categoryId' => $category_id]);
         }
-        dump($request->old(), $request);
-        return view('admin.addNews');
-    }
 }
