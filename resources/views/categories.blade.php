@@ -33,7 +33,11 @@
                         <hr>
                     </div>
                 </a>
+
             @endforeach
+                <div class="container">
+                    @include('addCategory')
+                </div>
         </div>
     </div>
 @endsection

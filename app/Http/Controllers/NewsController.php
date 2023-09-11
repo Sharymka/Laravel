@@ -26,4 +26,14 @@ class NewsController extends Controller
             ['oneNews' => $oneNews, 'categoryName' => $categoryName]);
 
     }
+
+    public function addNews(Request $request) {
+//        dump($request);
+        if($request->isMethod('post')) {
+            $request->flash();
+            redirect()->route('admin.addNews');
+        }
+        dump($request->old(), $request);
+        return view('admin.addNews');
+    }
 }

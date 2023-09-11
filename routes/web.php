@@ -55,6 +55,10 @@ Route::get('/authorization',
     [App\Http\Controllers\AuthorizationController::class, 'authorization'])
     ->name('authorization');
 
+Route::get('/test', function () {
+    return 'такой ответ ..';
+});
+
 Route::group(
     [
         "prefix" => "admin",
@@ -71,6 +75,10 @@ Route::group(
         Route::get('/test2', [
             'uses' => 'App\Http\Controllers\Admin\IndexController@test2',
             'as' => 'test2']);
+        Route::match(['get', 'post'], '/addNews', [
+                'uses' => 'App\Http\Controllers\NewsController@addNews',
+                'as' => 'addNews']
+        );
     }
 );
 

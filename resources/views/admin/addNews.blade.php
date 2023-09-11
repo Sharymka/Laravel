@@ -1,13 +1,6 @@
-@extends('news')
 
-@section('title')
-@parent news
-@endsection
-
-@section('addNews')
-
-    <form action="action.php" method="post">
-
+    <form action="{{route('admin.addNews')}}" method="post">
+        @csrf
         <p>
             <b><label for="name">News name:</label></b>
             <input name="name" id="name" type="text">
@@ -23,4 +16,3 @@
         <button style="margin: 0; padding: 10px 30px 10px 30px;" type="submit">add</button>
     </form>
 
-@endsection

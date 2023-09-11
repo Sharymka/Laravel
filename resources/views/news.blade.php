@@ -48,7 +48,7 @@
             @endforelse
             <div>
                 <div class="container">
-                    @yield('content')
+                    @yield('addNews')
                 </div>
             </div>
                 <h1 style = "margin-top: 20px" class="h3 mb-3 font-weight-normal">Please add news</h1>
