@@ -6,7 +6,6 @@
 @endsection
 
 @section('content')
-
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
         <symbol id="calendar-event" viewBox="0 0 16 16">
             <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5v-1z"/>
@@ -46,69 +45,9 @@
             @empty
                 <h1>Нет новостей </h1>
             @endforelse
-            <div>
                 <div class="container">
-                    @yield('addNews')
+                    @include('newsAdd')
                 </div>
-            </div>
-                <h1 style = "margin-top: 20px" class="h3 mb-3 font-weight-normal">Please add news</h1>
-                <label for="addNews" class="sr-only"></label>
-                <input type="text" id="addNews" class="form-control" placeholder="Add news here" required autofocus>
-                <button style = " width: 140px; margin: auto; margin-top: 20px" class="btn btn-lg btn-primary btn-block" type="submit">Add</button>
-            </div>
+        </div>
     </div>
 @endsection
-
-
-{{--@extends('main')--}}
-
-{{--@section('title')--}}
-{{--    @parent news--}}
-{{--@endsection--}}
-
-{{--@section('content')--}}
-{{--    @forelse($news as $oneNews)--}}
-{{--        <h2>{{$oneNews["name"]}}</h2>--}}
-{{--        <h2>{{$oneNews["description"]}}</h2>--}}
-{{--        <h2>{{$oneNews["author"]}}</h2>--}}
-{{--        <h2>{{$oneNews["created_at"]}}</h2>--}}
-{{--        @if(!$oneNews["isPrivate"])--}}
-{{--            <h1>--}}
-{{--                <a href = "{{route('showOne', [$oneNews['id']])}}" >Подробнее...</a>--}}
-{{--                --}}{{--            <a href = "/news/{{$oneNews['id']}}/show" >Подробнее...</a>--}}
-{{--            </h1>--}}
-{{--        @endif--}}
-{{--        <hr>--}}
-{{--    @empty--}}
-{{--        <h1>Нет новостей </h1>--}}
-{{--    @endforelse--}}
-{{--@endsection--}}
-
-
-{{--@forelse($news as $oneNews)--}}
-{{--    <h2>{{$oneNews["name"]}}</h2>--}}
-{{--    <h2>{{$oneNews["description"]}}</h2>--}}
-{{--    <h2>{{$oneNews["author"]}}</h2>--}}
-{{--    <h2>{{$oneNews["created_at"]}}</h2>--}}
-{{--    @if(!$oneNews["isPrivate"])--}}
-{{--        <h1>--}}
-{{--            <a href = "{{route('showOne', [$oneNews['id']])}}" >Подробнее...</a>--}}
-{{--            <a href = "/news/{{$oneNews['id']}}/show" >Подробнее...</a>--}}
-{{--        </h1>--}}
-{{--    @endif--}}
-{{--    <hr>--}}
-{{--@empty--}}
-{{--    <h1>Нет новостей </h1>--}}
-{{--@endforelse--}}
-
-{{--<h1>Новости </h1>--}}
-{{--<?php foreach ( $news as $n): ?>--}}
-{{--<h2>--}}
-{{--    <div><?=$n["name"]?></div>--}}
-{{--</h2>--}}
-{{--<div><?=$n["description"]?></div>--}}
-{{--<div><?=$n["author"]?></div>--}}
-{{--<div><?=$n["created_at"]?></div>--}}
-{{--<a href = <?= route('showOne', [$n['id']])?>>Далее</a>--}}
-{{--<hr>--}}
-{{--<?php endforeach; ?>--}}
