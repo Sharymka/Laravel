@@ -1,5 +1,5 @@
 
-    <form action="{{route('addNews')}}" method="post">
+    <form action="{{route('news.addNews')}}" method="post">
         @csrf
         <input type="hidden" id="title" name="category_id" value ="{{$categoryId}}">
         <h1 style = "margin-top: 20px" class="h3 mb-3 font-weight-normal">Please add news</h1>

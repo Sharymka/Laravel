@@ -37,7 +37,7 @@
                             <p class="mb-0 opacity-75">{{$oneNews["author"]}}</p>
                             @if(!$oneNews["isPrivate"])
                                 <p>
-                                    <a href="{{route('showOne', [$categoryId, $oneNews['id']])}}"
+                                    <a href="{{route('news.showOne', [$categoryId, $oneNews['id']])}}"
                                        class="opacity-50 text-nowrap">Подробнее...</a>
                                 </p>
                             @endif

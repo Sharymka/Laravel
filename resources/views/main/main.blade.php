@@ -25,10 +25,12 @@
     <link href="bootstrap-4.0.0/docs/4.0/examples/sign-in/sign-in.css" rel="stylesheet">
 </head>
 <body class="d-flex flex-column h-100">
+{{--<x-main.header></x-main.header>--}}
 <header class="p-3 text-bg-dark">
-{{--    <div class="container">--}}
-{{--        @yield('header')--}}
-{{--    </div>--}}
+
+    <div class="container">
+        @yield('header')
+    </div>
     <div class="container">
         <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
             <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">

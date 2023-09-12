@@ -13,80 +13,32 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/hello/{name}', function (string $name): string {
-    return "Hello, {$name}";
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [ App\Http\Controllers\Admin\IndexController::class, 'index'])->name('admin');
+    Route::get('/test1', [App\Http\Controllers\Admin\IndexController::class, 'test1'])->name('test1');
+    Route::get('/test2', [App\Http\Controllers\Admin\IndexController::class, 'test2'])->name('test2');
+    Route::match(['get', 'post'], '/addNews', [App\Http\Controllers\NewsController::class, 'addNews'])->name('addNews');
 });
 
-//
-//Route::get('/info', function (): string {
-//    return "Страница с информацией о проекте";
-//});
+Route::prefix('news')->name('news.')->group(function () {
+    Route::get('/blockOfNews/{categoryId}', [\App\Http\Controllers\NewsController::class, 'blockOfNews'])
+        ->name('blockOfNews')->where('categoryId',"\d+");
+    Route::get('/news/showOne/{categoryId}/{newsId}', [\App\Http\Controllers\NewsController::class , 'showOne'])
+        ->name('showOne')->where('newsId',"\d+")->where('categoryId',"\d+");
+    Route::match(['get', 'post'],'/blockOfNews/addNews', [App\Http\Controllers\NewsController::class, 'addNews'])
+        ->name('addNews');
+});
 
+Route::get('/authorization',
+    [App\Http\Controllers\AuthorizationController::class, 'authorization'])
+    ->name('authorization');
 
-
-//
-//Route::get('/news/{id}', [
-//     \App\Http\Controllers\NewsController::class, 'news'])
-//    ->name('news')
-//    ->where('id', '\d+');
-
-Route::get('/main', [App\Http\Controllers\MainController::class, 'index'])
-    ->name('main');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
 
 Route::get('/categories', [App\Http\Controllers\CategoriesController::class, 'categories'])
     ->name('categories');
-
-Route::get('/blockOfNews/{categoryId}', [
-    \App\Http\Controllers\NewsController::class, 'blockOfNews'])
-    ->name('blockOfNews')->where('categoryId',"\d+");;
-
-Route::get('/news/showOne/{categoryId}/{newsId}', [\App\Http\Controllers\NewsController::class , 'showOne'])
-->name('showOne')->where('newsId',"\d+")->where('categoryId',"\d+");
-
-Route::match(['get', 'post'], '/addNews', [\App\Http\Controllers\NewsController::class , 'addNews'])
-    ->name('addNews');
-
-//Route::get('/news/add', [
-//    'uses' => '\App\Http\Controllers\NewsController@newsAdd',
-//    'as' => 'newsAdd'
-//]);
-
-Route::get('/authorization',
-    [App\Http\Controllers\AuthorizationController::class, 'authorization'])
-    ->name('authorization');
-
-Route::match(['get', 'post'],'/blockOfNews/addNews', [App\Http\Controllers\NewsController::class, 'addNews'])
-    ->name('addNews');
-
-Route::group(
-    [
-        "prefix" => "admin",
-//      "namespace" => "Admin",
-        "as" => "admin."
-    ],
-    function () {
-        Route::get('/', [
-            'uses' => 'App\Http\Controllers\Admin\IndexController@index',
-            'as' => "admin"]);
-        Route::get('/test1', [
-            'uses' => 'App\Http\Controllers\Admin\IndexController@test1',
-            'as' => 'test1']);
-        Route::get('/test2', [
-            'uses' => 'App\Http\Controllers\Admin\IndexController@test2',
-            'as' => 'test2']);
-        Route::match(['get', 'post'], '/addNews', [
-                'uses' => 'App\Http\Controllers\NewsController@addNews',
-                'as' => 'addNews']
-        );
-    }
-);
-
-//Route::get('/welcome', [
-//    'uses' => "App\Http\Controllers\WelcomeController@index",
-//    'as' => 'welcome']);
 
 
 

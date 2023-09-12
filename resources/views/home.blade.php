@@ -1,7 +1,7 @@
 @extends('main.main')
 
 @section('title')
-    @parent home
+    @parent welcome
 @endsection
 
 @section('content')

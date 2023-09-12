@@ -35,7 +35,7 @@
                         <p class="mb-0 opacity-75">{{$oneNews["description"]}}</p>
                         <p class="mb-0 opacity-75">{{$oneNews["author"]}}</p>
                         <p>
-                            <a href="{{route('blockOfNews', [$categoryId])}}" class="opacity-50 text-nowrap">Назад</a>
+                            <a href="{{route('news.blockOfNews', [$categoryId])}}" class="opacity-50 text-nowrap">Назад</a>
                         </p>
                     </div>
                     <small class="opacity-50 text-nowrap">{{$oneNews["created_at"]}}</small>
