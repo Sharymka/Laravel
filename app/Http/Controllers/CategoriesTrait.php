@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Category;
 
 trait CategoriesTrait
 {
+
 
    public function createCategories(): array {
 

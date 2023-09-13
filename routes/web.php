@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\NewsController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\NewsController as AdminNesController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,15 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [ App\Http\Controllers\Admin\IndexController::class, 'index'])->name('admin');
-    Route::get('/test1', [App\Http\Controllers\Admin\IndexController::class, 'test1'])->name('test1');
-    Route::get('/test2', [App\Http\Controllers\Admin\IndexController::class, 'test2'])->name('test2');
-    Route::match(['get', 'post'], '/addNews', [App\Http\Controllers\NewsController::class, 'addNews'])->name('addNews');
+    Route::match(['get', 'post'], '/addNews', [AdminNesController::class, 'addNews'])->name('addNews');
+    Route::resource('/news', AdminNesController::class);
+    Route::resource('/categoties', AdminCategoryController::class);
 });
 
 Route::prefix('news')->name('news.')->group(function () {
     Route::get('/blockOfNews/{categoryId}', [\App\Http\Controllers\NewsController::class, 'blockOfNews'])
         ->name('blockOfNews')->where('categoryId',"\d+");
-    Route::get('/news/showOne/{categoryId}/{newsId}', [\App\Http\Controllers\NewsController::class , 'showOne'])
+    Route::get('/showOne/{categoryId}/{newsId}', [\App\Http\Controllers\NewsController::class , 'showOne'])
         ->name('showOne')->where('newsId',"\d+")->where('categoryId',"\d+");
     Route::match(['get', 'post'],'/blockOfNews/addNews', [App\Http\Controllers\NewsController::class, 'addNews'])
         ->name('addNews');

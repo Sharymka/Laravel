@@ -2,10 +2,10 @@
 
 
 namespace App\Http\Controllers;
-trait StorageNews
+trait Storage
 {
     private array $news = [];
-    private array $categories;
+    private array $categories = [];
 
     /**
      * @return array

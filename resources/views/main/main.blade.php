@@ -25,35 +25,7 @@
     <link href="bootstrap-4.0.0/docs/4.0/examples/sign-in/sign-in.css" rel="stylesheet">
 </head>
 <body class="d-flex flex-column h-100">
-{{--<x-main.header></x-main.header>--}}
-<header class="p-3 text-bg-dark">
-
-    <div class="container">
-        @yield('header')
-    </div>
-    <div class="container">
-        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-            <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-                <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
-            </a>
-
-            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-                <li><a href="{{route('home')}}" class="nav-link px-2 text-secondary">Home</a></li>
-                <li><a href="{{route('admin.admin')}}" class="nav-link px-2 text-white">Admin</a></li>
-                <li><a href="{{route('categories')}}" class="nav-link px-2 text-white">News</a></li>
-            </ul>
-
-            <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-                <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
-            </form>
-
-            <div class="text-end">
-                <a href="{{route('authorization')}}" type="button" class="btn btn-outline-light me-2">Sign-in</a>
-                <a href="" type="button" class="btn btn-warning">Sign-up</a>
-            </div>
-        </div>
-    </div>
-</header>
+<x-header></x-header>
     <div class="container">
         @yield('content')
     </div>
@@ -72,24 +44,4 @@
         <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
     </symbol>
 </svg>
-<footer class="footer mt-auto bg-body-tertiary">
-    <div class="container">
-        <div class="d-flex flex-wrap justify-content-between align-items-center  my-4 border-top">
-            <div class="col-md-4 d-flex align-items-center">
-                <a href="/" class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1">
-                    <svg class="bi" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-                </a>
-                <span class="mb-3 mb-md-0 text-body-secondary">&copy; 2023</span>
-            </div>
-
-            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-                <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#twitter"/></svg></a></li>
-                <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"/></svg></a></li>
-                <li class="ms-3"><a class="text-body-secondary" href="#"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"/></svg></a></li>
-            </ul>
-        </div>
-    </div>
-</footer>
-<script src="bootstrap-5.3.1/assets/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<x-footer></x-footer>

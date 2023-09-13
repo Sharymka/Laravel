@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 trait NewsTrait
 {
-    use StorageNews;
+    use Storage;
 
    public function createNews($categoryId, string $title = null,string $description = null, int $idOneNews = null): array {
 

@@ -11,7 +11,7 @@ class Controller extends BaseController
     use AuthorizesRequests, ValidatesRequests;
     use CategoriesTrait;
     use NewsTrait;
-    use StorageNews;
+    use Storage;
 
    public function getCategories():array {
        $this->categories = $this->createCategories();
