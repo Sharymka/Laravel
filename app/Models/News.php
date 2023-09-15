@@ -41,17 +41,19 @@ class News
     /**
      * @return array
      */
-    public function getNews(int $idOneNews = null): array
+    public function getNews(int|string $idOneNews = null): array | null
     {
-        if ($idOneNews != 0) {
-            foreach ($this->getNews() as $oneNews) {
-                if ($idOneNews = $oneNews['id']) {
-                    return $oneNews;
-                }
+        if ($idOneNews == null) {
+            return $this->news;
+        }
 
+        foreach ($this->news as $oneNews) {
+            if ($idOneNews == $oneNews['id']) {
+                return $oneNews;
             }
         }
-        return $this->news;
+
+        return null;
     }
 
     /**

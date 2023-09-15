@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoriesTrait;
 use App\Http\Controllers\NewsTrait;
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class NewsController
 {
@@ -13,16 +14,20 @@ class NewsController
     use NewsTrait;
 
     public function index() {
-        $news = $this->createNews();
-//        dump($news);
-        return view('admin.news.index', ['news' =>$news]);
+
+        $news = $this->getNews();
+
+        if (count($news) == 0) {
+            $news = $this->createNews();
+        }
+
+        return view('admin.news.index', ['news' => $news]);
     }
 
-    public function store(Request $request, News $news) {
-        dump($news->getNews());
+    public function store(Request $request, Response $response, News $news) {
         $id = count($news->getNews());
         $news->addNews([
-            'id' =>$id,
+            'id' =>++$id,
             'category_id' => 6,
             'title'=> $request->input('title'),
             'description' => $request->input('description'),
@@ -31,13 +36,13 @@ class NewsController
             'isPrivate' => 'false',
             'status' => $request->input('status')
         ]);
-        dump($news->getNews());
 
-        $oneNews = $news->getNews($id);
 
-//        return view('admin.news.show')->with(['oneNews' => $oneNews]);
-        return redirect()->route('admin.news.show',['oneNews' => $oneNews]);
-//        return redirect()->route('admin.news.create');
+        $json = json_encode($news->getNews(), JSON_PRETTY_PRINT);
+//
+        file_put_contents('/tmp/news.json',$json);
+
+        return redirect()->route('admin.news.show',['news' => $id]);
     }
 
     public function update() {
@@ -46,11 +51,18 @@ class NewsController
 
     public function create(News $news) {
 
-        return view('admin.news.create',['news' => $news]);
+        return view('admin.news.create')->with(['news' => $news]);
     }
 
-    public function show($oneNews) {
-        dump($oneNews);
-//        return view('admin.news.show')->with(['oneNews' => $oneNews]);
+    public function show($newsId, News $news) {
+        $newsJson = json_decode(file_get_contents('/tmp/news.json'), true);
+        $news->setNews($newsJson);
+        $oneNews = $news->getNews($newsId);
+
+        if ($oneNews == null) {
+            return redirect()->route('admin.news.index');
+        }
+
+        return view('admin.news.show')->with(['oneNews' => $news->getNews($newsId)]);
     }
 }

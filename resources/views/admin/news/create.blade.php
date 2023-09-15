@@ -5,7 +5,7 @@
         {{--    <input type="hidden" id="title" name="category_id" value ="{{$categoryId}}">--}}
         <h1 style="margin-top: 30px" class="h3 mb-3 font-weight-normal">Please add news</h1>
 {{--        <input type="hidden" id="$categoryId" name="category_id" value ="{{$categoryId}}">--}}
-        <input type="hidden" id="$newsId" name="news_id" value ="{{count($news->getNews())}}">
+        <input type="hidden" id="$newsId" name="news_id" value ="{{count($news->getNews()) + 1}}">
         <label for="title" class="sr-only"></label>
         <input style="margin-top: 30px" type="text" id="title" name="title" value ="{{old('title')}}" class="form-control"
                placeholder="News title" required autofocus>
