@@ -15,7 +15,9 @@ trait CategoriesTrait
            for($i = 1; $i <= $quantityCategoties; $i++) {
                $categories[$i] = [
                    'id' => $i,
-                   'name'=> \fake()->jobTitle()
+                   'title'=> \fake()->jobTitle(),
+                   'author' => \fake()->userName(),
+                   'created_at' =>now()->format('d-m-y h:i'),
                ];
        }
            return $categories;

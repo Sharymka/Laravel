@@ -6,7 +6,7 @@ trait NewsTrait
 {
     use Storage;
 
-   public function createNews($categoryId, string $title = null,string $description = null, int $idOneNews = null): array {
+   public function createNews(int $idOneNews = null): array {
 
        $news = [];
        $quantityNews = 10;
@@ -15,12 +15,13 @@ trait NewsTrait
            for($i = 1; $i <= $quantityNews; $i++) {
                $news[$i] = [
                    'id' => $i,
-                   'category_id' => $categoryId,
+                   'category_id' => $i,
                    'title'=> \fake()->jobTitle(),
                    'description' => \fake()->text(100),
                    'author' => \fake()->userName(),
                    'created_at' =>now()->format('d-m-y h:i'),
-                   'isPrivate' => fake()->boolean()
+                   'isPrivate' => fake()->boolean(),
+                   'status' => 'active'
                ];
            }
            $this->setNews($news);

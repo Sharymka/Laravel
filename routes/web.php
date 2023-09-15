@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\Admin\NewsController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\NewsController as AdminNesController;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 
 /*
@@ -17,10 +17,10 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 */
 
 Route::prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', [ App\Http\Controllers\Admin\IndexController::class, 'index'])->name('admin');
-    Route::match(['get', 'post'], '/addNews', [AdminNesController::class, 'addNews'])->name('addNews');
-    Route::resource('/news', AdminNesController::class);
-    Route::resource('/categoties', AdminCategoryController::class);
+    Route::get('/', [ App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');
+    Route::match(['get', 'post'], '/addNews', [AdminNewsController::class, 'addNews'])->name('addNews');
+    Route::resource('/news', AdminNewsController::class);
+    Route::resource('/categories', AdminCategoryController::class);
 });
 
 Route::prefix('news')->name('news.')->group(function () {
