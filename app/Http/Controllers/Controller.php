@@ -19,8 +19,8 @@ class Controller extends BaseController
        return $this->categories;
     }
 
-    public function getBlockOfNews($categoryId) {
-        $this->news = $this->createNews($categoryId);
+    public function getBlockOfNews() {
+        $this->news = $this->createNews();
         return $this->news;
     }
 

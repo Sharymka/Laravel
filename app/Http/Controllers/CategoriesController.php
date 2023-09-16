@@ -10,6 +10,6 @@ class CategoriesController extends Controller
     {
 
         $categories = parent::getCategories();
-        return view('categories', ['categories' => $categories]);
+        return view('news.categories', ['categories' => $categories]);
     }
 }

@@ -14,7 +14,6 @@ class NewsController
     use NewsTrait;
 
     public function index() {
-
         $news = $this->getNews();
 
         if (count($news) == 0) {
@@ -24,7 +23,7 @@ class NewsController
         return view('admin.news.index', ['news' => $news]);
     }
 
-    public function store(Request $request, Response $response, News $news) {
+    public function store(Request $request, News $news) {
         $id = count($news->getNews());
         $news->addNews([
             'id' =>++$id,

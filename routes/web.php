@@ -24,6 +24,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
 });
 
 Route::prefix('news')->name('news.')->group(function () {
+    Route::get('/categories', [App\Http\Controllers\CategoriesController::class, 'categories'])
+        ->name('categories');
     Route::get('/blockOfNews/{categoryId}', [\App\Http\Controllers\NewsController::class, 'blockOfNews'])
         ->name('blockOfNews')->where('categoryId',"\d+");
     Route::get('/showOne/{categoryId}/{newsId}', [\App\Http\Controllers\NewsController::class , 'showOne'])
@@ -40,8 +42,7 @@ Route::get('/authorization',
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])
     ->name('home');
 
-Route::get('/categories', [App\Http\Controllers\CategoriesController::class, 'categories'])
-    ->name('categories');
+
 
 
 

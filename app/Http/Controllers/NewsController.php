@@ -10,9 +10,10 @@ class NewsController extends Controller
 
     public function blockOfNews($categoryId) {
 
-         $blockOfNews = parent::getBlockOfNews($categoryId);
 
-        return \view('news',
+         $blockOfNews = parent::getBlockOfNews();
+//        dump($blockOfNews);
+        return \view('news.news',
             ['blockOfNews' => $blockOfNews, 'categoryId' => $categoryId]);
 
 
@@ -22,7 +23,7 @@ class NewsController extends Controller
     {
 
         $oneNews = parent::getOneNews($categoryId, $newsId);
-        return \view('oneNews',
+        return \view('news.oneNews',
             ['oneNews' => $oneNews, 'categoryId' => $categoryId]);
 
     }
