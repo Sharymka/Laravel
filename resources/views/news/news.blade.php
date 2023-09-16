@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('main.main')
 
 @section('title')
     @parent news
@@ -28,7 +28,7 @@
         <div class="list-group">
             <h1>News</h1>
             @forelse($blockOfNews as $oneNews)
-                <div href="" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                <a href="{{route('news.showOne', ['categorySlug' => $categorySlug, 'newsId' => $oneNews['id']])}}" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
                     <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32"
                          class="rounded-circle flex-shrink-0">
                     <div class="d-flex gap-2 w-100 justify-content-between">
@@ -36,23 +36,23 @@
                             <h6 class="mb-0">{{$oneNews["title"]}}</h6>
                             <p class="mb-0 opacity-75">{{$oneNews["description"]}}</p>
                             <p class="mb-0 opacity-75">{{$oneNews["author"]}}</p>
-                            @if(!$oneNews["isPrivate"])
-                                <p>
-                                    <a href="{{route('news.showOne', [$categoryId, $oneNews['id']])}}"
-                                       class="opacity-50 text-nowrap">Подробнее...</a>
-                                </p>
-                            @endif
+{{--                            @if(!$oneNews["isPrivate"])--}}
+{{--                                <p>--}}
+{{--                                    <a "--}}
+{{--                                       class="opacity-50 text-nowrap">Подробнее...</a>--}}
+{{--                                </p>--}}
+{{--                            @endif--}}
                         </div>
                         <small class="opacity-50 text-nowrap">{{$oneNews["created_at"]}}</small>
                         <hr>
                     </div>
-                </div>
+                </a>
             @empty
                 <h1>Нет новостей </h1>
             @endforelse
-            <div class="container">
-                @include('newsAdd')
-            </div>
+{{--            <div class="container">--}}
+{{--                @include('news.newsAdd')--}}
+{{--            </div>--}}
         </div>
     </div>
 @endsection

@@ -4,16 +4,43 @@ namespace App\Models;
 
 class Category
 {
-    private array $categories;
-
-    /**
-     * @param array $categories
-     */
-    public function __construct(array $categories)
-    {
-        $this->categories = $categories;
-    }
-
+    private array $categories = [
+        1 => [
+            'id' => 1 ,
+            'title'=> 'sport',
+            'author' => 'author1',
+            'slug' => 'sport' ,
+            'created_at' =>'21-09-19',
+        ],
+        2 => [
+            'id' => 2 ,
+            'title'=> 'economics',
+            'author' => 'author2',
+            'slug' => 'economics' ,
+            'created_at' =>'12-04-20',
+        ],
+        3 => [
+            'id' => 3 ,
+            'title'=> 'politics',
+            'author' => 'author3',
+            'slug' => 'politics' ,
+            'created_at' =>'18-03-21',
+        ],
+        4 => [
+            'id' => 4,
+            'title'=> 'weather',
+            'author' => 'author4',
+            'slug' => 'weather' ,
+            'created_at' =>'16-14-22',
+        ],
+        5 => [
+            'id' => 5,
+            'title'=> 'others',
+            'author' => 'author5',
+            'slug' => 'others' ,
+            'created_at' =>'16-17-21',
+        ],
+    ];
 
     /**
      * @param array $categories
@@ -24,10 +51,28 @@ class Category
     }
 
     /**
+     * @param array $categories
+     */
+    public function addCategories(array $category): void
+    {
+        $this->categories[] = $category;
+    }
+
+    /**
      * @return array
      */
-    public function getCategories(): array
+    public function getCategories(string $categorySlug = null): array|null
     {
-        return $this->categories;
+        if($categorySlug == null) {
+            return $this->categories;
+        }
+
+        foreach ($this->categories as $category) {
+            if ($categorySlug == $category['slug']) {
+                return $category;
+            }
+        }
+        return null;
+
     }
 }

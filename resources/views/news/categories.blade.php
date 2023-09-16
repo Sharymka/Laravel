@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('main.main')
 
 @section('title')
     @parent newsCategories
@@ -27,7 +27,7 @@
         <div class="list-group">
             <h1>Categories</h1>
             @foreach($categories as $category)
-                <a href="{{route('news.blockOfNews', [$category['id']])}}"
+                <a href="{{route('news.blockOfNews', ['categorySlug' => $category['slug']])}}"
                    class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
                     <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32"
                          class="rounded-circle flex-shrink-0">
@@ -35,15 +35,15 @@
                         <div>
                             <h6 class="mb-0">{{$category["title"]}}</h6>
                         </div>
-                        <small class="opacity-50 text-nowrap">{{$category["id"]}}</small>
+                        <small class="opacity-50 text-nowrap">{{$category["created_at"]}}</small>
                         <hr>
                     </div>
                 </a>
 
             @endforeach
-            <div class="container">
-                @include('addCategory')
-            </div>
+{{--            <div class="container">--}}
+{{--                @include('news.addCategory')--}}
+{{--            </div>--}}
         </div>
     </div>
 @endsection

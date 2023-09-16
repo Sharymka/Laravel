@@ -1,5 +1,5 @@
 
-    <form action=".." method="post">
+    <form action="../.." method="post">
         <h1 style = "margin-top: 20px" class="h3 mb-3 font-weight-normal">Please add categoty</h1>
         <label for="addCategory" class="sr-only"></label>
         <input type="text" id="addCategory" class="form-control" placeholder="Add category here" required autofocus>

@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('main.main')
 
 @section('title')
     @parent authorization
