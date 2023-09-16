@@ -16,7 +16,7 @@ class NewsControllerTest extends TestCase
 
     public function test_the_news_blockOfNews_page_returns_a_successful_response(): void
     {
-        $response = $this->get(route('news.blockOfNews'));
+        $response = $this->get(route('news.blockOfNews', ['categoryId' => 1]));
 
         $response->assertStatus(200);
         $response->assertSeeText('News');
@@ -24,7 +24,7 @@ class NewsControllerTest extends TestCase
 
     public function test_the_news_showOne_page_returns_a_successful_response(): void
     {
-        $response = $this->get(route('news.showOne'));
+        $response = $this->get(route('news.showOne', ['categoryId' => 1, 'newsId' => 2 ]));
 
         $response->assertStatus(200);
         $response->assertSeeText('Show one news');

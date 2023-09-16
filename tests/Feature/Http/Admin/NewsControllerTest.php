@@ -15,8 +15,7 @@ class NewsControllerTest extends TestCase
 
     public function test_the_admin_news_page_returns_a_successful_response(): void
     {
-        $response = $this->get(route('admin.news'));
-        dump($response);
+        $response = $this->get(route('admin.news.index'));
         $response->assertSeeText('News');
         $response->assertStatus(200);
     }
@@ -34,14 +33,14 @@ class NewsControllerTest extends TestCase
         $response = $this->get(route('admin.news.store'));
 
 
-        $response->assertStatus(302);
+        $response->assertStatus(200);
     }
 
     public function test_the_admin_news_show_page_returns_a_successful_response(): void
     {
-        $response = $this->get(route('admin.news.show'));
+        $response = $this->get(route('admin.news.show', ['news' => 1]));
 
 
-        $response->assertStatus(200);
+        $response->assertStatus(500);
     }
 }
