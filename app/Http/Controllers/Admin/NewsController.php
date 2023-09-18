@@ -2,35 +2,30 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\CategoriesTrait;
-use App\Http\Controllers\NewsTrait;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
 class NewsController
 {
-//    use CategoriesTrait;
-//    use NewsTrait;
 
-    public function index(News $news) {
+    public function index(News $news, Request $request) {
 
-        if(file_exists('/tmp/news.json')) {
-            $json = file_get_contents('/tmp/news.json');
+        if(Storage::disk()->exists('news.json')) {
+            $json = Storage::disk()->get('news.json');
             $newNews = json_decode($json, true);
             $news->setNews($newNews);
         }
 
-        return view('admin.news.index', ['news' => $news->getNews()]);
+        return view('admin.news.index', ['news' => $news->getNews(), 'request' => $request]);
     }
 
     public function store(Request $request, News $news, Category $categories) {
 
-        if(file_exists('/tmp/news.json')) {
-            $json = file_get_contents('/tmp/news.json');
+        if(Storage::disk()->exists('news.json')) {
+            $json = Storage::disk()->get('news.json');
             $newNews = json_decode($json, true);
-            dump($newNews);
             $news->setNews($newNews);
         }
 
@@ -50,21 +45,21 @@ class NewsController
         $news->addNews($newsToAdd);
 
 
-        $json = json_encode($news->getNews(), JSON_PRETTY_PRINT);
+        $json = json_encode($news->getNews(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 //
-        file_put_contents('/tmp/news.json',$json);
+        Storage::disk('local')->put('news.json', $json);
 
-        return redirect()->route('admin.news.show',['news' => $id]);
+        return redirect()->route('admin.news.show',['news' => $id, 'request' => $request]);
     }
 
-    public function create() {
+    public function create(Request $request) {
 
-        return view('admin.news.create');
+        return view('admin.news.create', ['request' => $request]);
     }
 
-    public function show($newsId, News $news) {
-        $json = file_get_contents('/tmp/news.json');
-        $newsJson = json_decode($json, true);
+    public function show(Request $request, $newsId, News $news) {
+
+        $newsJson = json_decode(Storage::disk()->get('news.json'), true);
         $news->setNews($newsJson);
         $oneNews = $news->getNews($newsId);
 
@@ -72,6 +67,6 @@ class NewsController
             return redirect()->route('admin.news.index');
         }
 
-        return view('admin.news.show')->with(['oneNews' => $oneNews]);
+        return view('admin.news.show')->with(['oneNews' => $oneNews, 'request' => $request]);
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class NewsController extends Controller
 {
@@ -12,13 +13,19 @@ class NewsController extends Controller
 
     public function newsCategories(Category $categories)
     {
-        return view('news.categories', ['categories' => $categories->getCategories()]);
+
+        $categories = DB::table('categories')->get();
+        return view('news.categories', ['categories' => $categories]);
     }
+
+
     public function blockOfNews(Category $categories, News $news, string $categorySlug) {
 
-        $category = $categories->getCategories($categorySlug);
-        $blockOfNews = $news->getNewsByCategoryId($category['id']);
+        $category = DB::table('categories')
+            ->where('title', '=', $categorySlug)->get();
 
+        $blockOfNews = DB::table('news')->get()
+            ->where('category_id', '=', $category->first()->id);
         return \view('news.news',
             ['blockOfNews' => $blockOfNews, 'categorySlug' => $categorySlug]);
 
@@ -27,8 +34,10 @@ class NewsController extends Controller
 
     public function showOne(News $news, $categorySlug, $newsId)
     {
+        $oneNews = DB::table('news')->find($newsId);
+//        dump($oneNews);
         return \view('news.oneNews',
-            ['oneNews' => $news->getNews($newsId), 'categorySlug' => $categorySlug]);
+            ['oneNews' => $oneNews, 'categorySlug' => $categorySlug]);
 
     }
         public function addNews(Request $request)

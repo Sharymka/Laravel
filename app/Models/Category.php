@@ -35,9 +35,9 @@ class Category
         ],
         5 => [
             'id' => 5,
-            'title'=> 'others',
+            'title'=> 'city live',
             'author' => 'author5',
-            'slug' => 'others' ,
+            'slug' => 'city live' ,
             'created_at' =>'16-17-21',
         ],
     ];

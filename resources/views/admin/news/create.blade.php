@@ -1,17 +1,21 @@
-@extends('admin.main')
+@extends('admin.index')
 @section('content')
-    <form action="{{route('admin.news.store')}}" method="post">
+    <form action="{{route('admin.news.store')}}" method="post" enctype="multipart/form-data">
         @csrf
         {{--    <input type="hidden" id="title" name="category_id" value ="{{$categoryId}}">--}}
         <h1 style="margin-top: 30px" class="h3 mb-3 font-weight-normal">Please add news</h1>
-{{--        <input type="hidden" id="$categoryId" name="category_id" value ="{{$categoryId}}">--}}
-{{--        <input type="hidden" id="$newsId" name="news_id" value ="{{count($news->getNews()) + 1}}">--}}
+        {{--        <input type="hidden" id="$categoryId" name="category_id" value ="{{$categoryId}}">--}}
+        {{--        <input type="hidden" id="$newsId" name="news_id" value ="{{count($news->getNews()) + 1}}">--}}
         <label for="title" class="sr-only"></label>
-        <input style="margin-top: 30px" type="text" id="title" name="title" value ="{{old('title')}}" class="form-control"
+        <input style="margin-top: 30px" type="text" id="title" name="title" value="{{old('title')}}"
+               class="form-control"
                placeholder="News title" required autofocus>
 
         <label for="author" class="sr-only"></label>
-        <input style="margin-top: 30px" type="text" id="author" name="author" value ="{{old('author')}}" class="form-control" placeholder="author">
+        <input style="margin-top: 30px" type="text" id="author" name="author" value="{{old('author')}}"
+               class="form-control" placeholder="author">
+
+        <input type="hidden" id="created_at" name="created_at" value="{{now()->format('y-m-d')}}">
 
         <label for="status" class="sr-only"></label>
         <select style="margin-top: 30px" type="text" id="status" name="status" class="form-control"

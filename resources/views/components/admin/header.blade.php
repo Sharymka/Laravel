@@ -1,6 +1,24 @@
 <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">News Agrigator</a>
-    <a  href="{{route('home')}}" class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle search">
+{{--    {{$requestUri}}--}}
+    <a  href="
+        @switch($requestUri)
+            @case ('/admin')
+                {{route('home')}}
+            @break
+             @case ('/admin/news')
+                {{route('admin.index')}}
+            @break
+            @case ('/admin/news/create')
+                {{route('admin.news.index')}}
+            @break
+            @case ('/admin/news/show')
+                {{route('admin.news.create')}}
+            @break
+            @default
+             {{route('admin.index')}}
+        @endswitch"
+        class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse" >
         Назад
     </a>
 {{--    <ul class="navbar-nav flex-row d-md-none">--}}
