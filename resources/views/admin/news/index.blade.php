@@ -33,11 +33,11 @@
             <tbody>
             @foreach($news as $oneNews)
                 <tr>
-                    <td>{{$oneNews['title']}}</td>
-                    <td>{{$oneNews['author']}}</td>
+                    <td>{{$oneNews->title}}</td>
+                    <td>{{$oneNews->author}}</td>
                     {{--                    <td>{{$oneNews['description']}}</td>--}}
-                    <td>{{$oneNews['created_at']}}</td>
-                    <td>{{$oneNews['status']}}</td>
+                    <td>{{$oneNews->created_at}}</td>
+                    <td>{{$oneNews->status}}</td>
                     <td>
                         <div class="btn-group me-2">
                             <a type="button" class="btn btn-sm btn-outline-secondary">edit</a>

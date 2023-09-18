@@ -31,15 +31,15 @@
                      class="rounded-circle flex-shrink-0">
                 <div class="d-flex gap-2 w-100 justify-content-between">
                     <div>
-                        <h6 class="mb-0">{{$oneNews["title"]}}</h6>
-                        <p class="mb-0 opacity-75">{{$oneNews["description"]}}</p>
-                        <p class="mb-0 opacity-75">{{$oneNews["author"]}}</p>
+                        <h6 class="mb-0">{{$oneNews->title}}</h6>
+                        <p class="mb-0 opacity-75">{{$oneNews->description}}</p>
+                        <p class="mb-0 opacity-75">{{$oneNews->author}}</p>
                         <p>
                             <a href="{{route('admin.news.create')}}"
                                class="opacity-50 text-nowrap">Назад</a>
                         </p>
                     </div>
-                    <small class="opacity-50 text-nowrap">{{$oneNews["created_at"]}}</small>
+                    <small class="opacity-50 text-nowrap">{{$oneNews->created_at}}</small>
                     <hr>
                 </div>
             </div>

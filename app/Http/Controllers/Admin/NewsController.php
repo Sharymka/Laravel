@@ -2,71 +2,76 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Enums\news\Status;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class NewsController
 {
 
-    public function index(News $news, Request $request) {
+    public function index(Request $request) {
 
-        if(Storage::disk()->exists('news.json')) {
-            $json = Storage::disk()->get('news.json');
-            $newNews = json_decode($json, true);
-            $news->setNews($newNews);
-        }
-
-        return view('admin.news.index', ['news' => $news->getNews(), 'request' => $request]);
-    }
-
-    public function store(Request $request, News $news, Category $categories) {
-
-        if(Storage::disk()->exists('news.json')) {
-            $json = Storage::disk()->get('news.json');
-            $newNews = json_decode($json, true);
-            $news->setNews($newNews);
-        }
-
-        $category = $categories->getCategories($request->input('category'));
-        $id = count($news->getNews());
-        $newsToAdd = [
-            'id' =>++$id,
-            'category_id' => $category['id'],
-            'title'=> $request->input('title'),
-            'description' => $request->input('description'),
-            'author' => $request->input('author'),
-            'created_at' =>$request->input('created_at'),
-            'isPrivate' => 'false',
-            'status' => $request->input('status')
-        ];
-
-        $news->addNews($newsToAdd);
+        $news = DB::table('news')->get();
 
 
-        $json = json_encode($news->getNews(), JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
-//
-        Storage::disk('local')->put('news.json', $json);
 
-        return redirect()->route('admin.news.show',['news' => $id, 'request' => $request]);
+        return view('admin.news.index', ['news' => $news, 'request' => $request]);
     }
 
     public function create(Request $request) {
 
-        return view('admin.news.create', ['request' => $request]);
+        $statuses = Status::getEnums();
+        $categories = DB::table('categories')->get();
+
+        return view('admin.news.create')
+            ->with([
+                'request' => $request,
+                'statuses' => $statuses,
+                'categories' => $categories]);
     }
 
-    public function show(Request $request, $newsId, News $news) {
+    public function store(Request $request) {
 
-        $newsJson = json_decode(Storage::disk()->get('news.json'), true);
-        $news->setNews($newsJson);
-        $oneNews = $news->getNews($newsId);
+        $category = DB::table('categories')
+            ->where('title', '=' , $request->input('category'))
+            ->get();
+        dump( $category->first()->id);
 
-        if ($oneNews == null) {
-            return redirect()->route('admin.news.index');
-        }
+        DB::table('news')->insert([
+            'title' => $request->input('title'),
+            'category_id' => $category->first()->id,
+            'author' => $request->input('author'),
+            'status' => $request->input('status'),
+            'description'=> $request->input('description'),
+            'image' => fake()->imageUrl(200,150),
+            'created_at' => $request->input('created_at')
+        ]);
 
-        return view('admin.news.show')->with(['oneNews' => $oneNews, 'request' => $request]);
+        $newsId = DB::table('news')->count();
+
+//        if(Storage::disk()->exists('news.json')) {
+//            $json = Storage::disk()->get('news.json');
+//            $newNews = json_decode($json, true);
+//            $news->setNews($newNews);
+//        }
+
+        return redirect()->route('admin.news.show',['news' => $newsId, 'request' => $request]);
+    }
+
+    public function show(Request $request, $newsId) {
+
+        $news = DB::table('news')->find($newsId);
+//        $newsJson = json_decode(Storage::disk()->get('news.json'), true);
+//        $news->setNews($newsJson);
+//        $oneNews = $news->getNews($newsId);
+
+//        if ($oneNews == null) {
+//            return redirect()->route('admin.news.index');
+//        }
+
+        return view('admin.news.show')->with(['oneNews' => $news, 'request' => $request]);
     }
 }

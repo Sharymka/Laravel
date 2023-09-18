@@ -12,9 +12,9 @@ class IndexController extends Controller
 {
     use NewsTrait;
     public function index(Response $response, Request $request){
-        $content = view('admin.index', ['request'=> $request ])->render();
+//        view('admin.index', ['request'=> $request ]);
 
-     return response($content);
+     return view('admin.index', ['request'=> $request]);
     }
 
 }

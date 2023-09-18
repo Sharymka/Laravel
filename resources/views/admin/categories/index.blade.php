@@ -22,9 +22,9 @@
             <tbody>
             @foreach($categories as $category)
                 <tr>
-                    <td>{{$category['title']}}</td>
-                    <td>{{$category['author']}}</td>
-                    <td>{{$category['created_at']}}</td>
+                    <td>{{$category->title}}</td>
+                    <td>{{$category->description}}</td>
+                    <td>{{$category->created_at}}</td>
                     <td>
                         <div class="btn-group me-2">
                             <a type="button" class="btn btn-sm btn-outline-secondary">edit</a>
