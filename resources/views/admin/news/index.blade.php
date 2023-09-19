@@ -21,9 +21,9 @@
         <table class="table table-striped table-sm">
             <thead>
             <tr>
+                <th scope="col">image</th>
                 <th scope="col">title</th>
                 <th scope="col">author</th>
-                {{--                <th scope="col">description</th>--}}
                 <th scope="col">date added</th>
                 <th scope="col">status</th>
                 <th scope="col">action</th>
@@ -33,9 +33,16 @@
             <tbody>
             @foreach($news as $oneNews)
                 <tr>
+                    <td>
+                        @if(@isset($oneNews->image))
+                            <image  alt="twbs" width="50" height="15" class="img-fluid" src="{{asset('/storage/'.$oneNews->image)}}"> </image>
+                        @else
+                            <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32"
+                                 class="rounded-circle flex-shrink-0">
+                        @endif
+                    </td>
                     <td>{{$oneNews->title}}</td>
                     <td>{{$oneNews->author}}</td>
-                    {{--                    <td>{{$oneNews['description']}}</td>--}}
                     <td>{{$oneNews->created_at}}</td>
                     <td>{{$oneNews->status}}</td>
                     <td>

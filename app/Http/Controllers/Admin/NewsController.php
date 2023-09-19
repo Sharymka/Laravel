@@ -34,6 +34,10 @@ class NewsController
     }
 
     public function store(Request $request) {
+        dump($request->file('image'));
+        $path = $request->file('image')->store('uploads', 'public');
+
+
 
         $category = DB::table('categories')
             ->where('title', '=' , $request->input('category'))
@@ -46,32 +50,19 @@ class NewsController
             'author' => $request->input('author'),
             'status' => $request->input('status'),
             'description'=> $request->input('description'),
-            'image' => fake()->imageUrl(200,150),
+            'image' => $path,
             'created_at' => $request->input('created_at')
         ]);
 
         $newsId = DB::table('news')->count();
 
-//        if(Storage::disk()->exists('news.json')) {
-//            $json = Storage::disk()->get('news.json');
-//            $newNews = json_decode($json, true);
-//            $news->setNews($newNews);
-//        }
-
-        return redirect()->route('admin.news.show',['news' => $newsId, 'request' => $request]);
+        return redirect()->route('admin.news.show',['news' => $newsId] );
     }
 
-    public function show(Request $request, $newsId) {
+    public function show(Request $request, $news) {
 
-        $news = DB::table('news')->find($newsId);
-//        $newsJson = json_decode(Storage::disk()->get('news.json'), true);
-//        $news->setNews($newsJson);
-//        $oneNews = $news->getNews($newsId);
+        $newsOne = DB::table('news')->find($news);
+        return view('admin.news.show')->with(['oneNews' => $newsOne, 'request' => $request, 'path' => $newsOne->image]);
 
-//        if ($oneNews == null) {
-//            return redirect()->route('admin.news.index');
-//        }
-
-        return view('admin.news.show')->with(['oneNews' => $news, 'request' => $request]);
     }
 }

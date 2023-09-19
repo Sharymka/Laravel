@@ -5,7 +5,8 @@
         {{--    <input type="hidden" id="title" name="category_id" value ="{{$categoryId}}">--}}
         <h1 style="margin-top: 30px" class="h3 mb-3 font-weight-normal">Please add news</h1>
         {{--        <input type="hidden" id="$categoryId" name="category_id" value ="{{$categoryId}}">--}}
-                <input type="hidden" id="$created_at" name="$created_at" value ="{{now()->format('y-m-d, h:i')}}">
+        <input type="hidden" id="$created_at" name="$created_at" value ="{{now()->format('y-m-d, h:i')}}">
+
         <label for="title" class="sr-only"></label>
         <input style="margin-top: 30px" type="text" id="title" name="title" value="{{old('title')}}"
                class="form-control"
@@ -17,9 +18,8 @@
 
         <label for="image" class="sr-only"></label>
         <input style="margin-top: 30px" type="file" id="image" name="image" value="#"
-               class="form-control" placeholder="author">
+               class="form-control" placeholder="image">
 
-        <input type="hidden" id="created_at" name="created_at" value="{{now()->format('y-m-d')}}">
 
         <label for="status" class="sr-only"></label>
         <select style="margin-top: 30px" type="text" id="status" name="status" class="form-control"
