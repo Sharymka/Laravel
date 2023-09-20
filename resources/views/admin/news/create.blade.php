@@ -1,31 +1,38 @@
-@extends('admin.main')
+@extends('admin.index')
 @section('content')
-    <form action="{{route('admin.news.store')}}" method="post">
+    <form action="{{route('admin.news.store')}}" method="post" enctype="multipart/form-data">
         @csrf
         {{--    <input type="hidden" id="title" name="category_id" value ="{{$categoryId}}">--}}
         <h1 style="margin-top: 30px" class="h3 mb-3 font-weight-normal">Please add news</h1>
-{{--        <input type="hidden" id="$categoryId" name="category_id" value ="{{$categoryId}}">--}}
-{{--        <input type="hidden" id="$newsId" name="news_id" value ="{{count($news->getNews()) + 1}}">--}}
+        {{--        <input type="hidden" id="$categoryId" name="category_id" value ="{{$categoryId}}">--}}
+        <input type="hidden" id="$created_at" name="$created_at" value ="{{now()->format('y-m-d, h:i')}}">
+
         <label for="title" class="sr-only"></label>
-        <input style="margin-top: 30px" type="text" id="title" name="title" value ="{{old('title')}}" class="form-control"
+        <input style="margin-top: 30px" type="text" id="title" name="title" value="{{old('title')}}"
+               class="form-control"
                placeholder="News title" required autofocus>
 
         <label for="author" class="sr-only"></label>
-        <input style="margin-top: 30px" type="text" id="author" name="author" value ="{{old('author')}}" class="form-control" placeholder="author">
+        <input style="margin-top: 30px" type="text" id="author" name="author" value="{{old('author')}}"
+               class="form-control" placeholder="author">
+
+        <label for="image" class="sr-only"></label>
+        <input style="margin-top: 30px" type="file" id="image" name="image" value="#"
+               class="form-control" placeholder="image">
+
 
         <label for="status" class="sr-only"></label>
         <select style="margin-top: 30px" type="text" id="status" name="status" class="form-control"
                 placeholder="status">
-            <option @if(old('status') == 'draft') selected @endif>draft</option>
-            <option @if(old('status') == 'active') selected @endif>active</option>
-            <option @if(old('status') == 'blocked') selected @endif>blocked</option>
+            @foreach($statuses as $status)
+                <option @if(old('status') == $status) selected @endif>{{$status}}</option>
+            @endforeach
         </select>
         <select style="margin-top: 30px" type="text" id="category" name="category" class="form-control"
                 placeholder="category">
-            <option>economics</option>
-            <option>politics</option>
-            <option>weather</option>
-            <option>city live</option>
+            @foreach($categories as $category)
+                <option>{{$category->title}}</option>
+            @endforeach
         </select>
         <label for="description" class="sr-only"></label>
         <textarea style="margin-top: 30px" type="text" id="description" name="description" class="form-control"

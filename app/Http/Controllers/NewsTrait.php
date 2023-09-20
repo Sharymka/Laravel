@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 trait NewsTrait
 {
-    use Storage;
 
    public function createNews(int $idOneNews = null): array {
 
@@ -24,9 +23,9 @@ trait NewsTrait
                    'status' => 'active'
                ];
            }
-           $this->setNews($news);
 
-           return $this->getNews();
+
+           return $news;
        }
 
        return [

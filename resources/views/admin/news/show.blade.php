@@ -27,19 +27,24 @@
     <div class="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
         <div class="list-group">
             <div href="" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-                <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32"
-                     class="rounded-circle flex-shrink-0">
+
+               @if(@isset($path))
+                    <image  alt="twbs" width="100" height="32" class="img-fluid" src="{{asset('/storage/'.$path)}}"> </image>
+                    @else
+                        <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32"
+                              class="rounded-circle flex-shrink-0">
+               @endif
                 <div class="d-flex gap-2 w-100 justify-content-between">
                     <div>
-                        <h6 class="mb-0">{{$oneNews["title"]}}</h6>
-                        <p class="mb-0 opacity-75">{{$oneNews["description"]}}</p>
-                        <p class="mb-0 opacity-75">{{$oneNews["author"]}}</p>
+                        <h6 class="mb-0">{{$oneNews->title}}</h6>
+                        <p class="mb-0 opacity-75">{{$oneNews->description}}</p>
+                        <p class="mb-0 opacity-75">{{$oneNews->author}}</p>
                         <p>
                             <a href="{{route('admin.news.create')}}"
                                class="opacity-50 text-nowrap">Назад</a>
                         </p>
                     </div>
-                    <small class="opacity-50 text-nowrap">{{$oneNews["created_at"]}}</small>
+                    <small class="opacity-50 text-nowrap">{{$oneNews->created_at}}</small>
                     <hr>
                 </div>
             </div>

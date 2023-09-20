@@ -11,10 +11,10 @@ use Illuminate\Routing\Route;
 class IndexController extends Controller
 {
     use NewsTrait;
-    public function index(Response $response){
-        $content = view('admin.index')->render();
-        dump($response);
-     return response($content);
+    public function index(Response $response, Request $request){
+//        view('admin.index', ['request'=> $request ]);
+
+     return view('admin.index', ['request'=> $request]);
     }
 
 }

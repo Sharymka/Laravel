@@ -2,76 +2,67 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\CategoriesTrait;
-use App\Http\Controllers\NewsTrait;
+use App\Http\Enums\news\Status;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class NewsController
 {
-//    use CategoriesTrait;
-//    use NewsTrait;
 
-    public function index(News $news) {
+    public function index(Request $request) {
 
-        if(file_exists('/tmp/news.json')) {
-            $json = file_get_contents('/tmp/news.json');
-            $newNews = json_decode($json, true);
-            $news->setNews($newNews);
-        }
+        $news = DB::table('news')->get();
 
-        return view('admin.news.index', ['news' => $news->getNews()]);
+
+
+        return view('admin.news.index', ['news' => $news, 'request' => $request]);
     }
 
-    public function store(Request $request, News $news, Category $categories) {
+    public function create(Request $request) {
 
-        if(file_exists('/tmp/news.json')) {
-            $json = file_get_contents('/tmp/news.json');
-            $newNews = json_decode($json, true);
-            dump($newNews);
-            $news->setNews($newNews);
-        }
+        $statuses = Status::getEnums();
+        $categories = DB::table('categories')->get();
 
-        $category = $categories->getCategories($request->input('category'));
-        $id = count($news->getNews());
-        $newsToAdd = [
-            'id' =>++$id,
-            'category_id' => $category['id'],
-            'title'=> $request->input('title'),
-            'description' => $request->input('description'),
+        return view('admin.news.create')
+            ->with([
+                'request' => $request,
+                'statuses' => $statuses,
+                'categories' => $categories]);
+    }
+
+    public function store(Request $request) {
+        dump($request->file('image'));
+        $path = $request->file('image')->store('uploads', 'public');
+
+
+
+        $category = DB::table('categories')
+            ->where('title', '=' , $request->input('category'))
+            ->get();
+        dump( $category->first()->id);
+
+        $newsId = DB::table('news')->insertGetId([
+            'title' => $request->input('title'),
+            'category_id' => $category->first()->id,
             'author' => $request->input('author'),
-            'created_at' =>$request->input('created_at'),
-            'isPrivate' => 'false',
-            'status' => $request->input('status')
-        ];
+            'status' => $request->input('status'),
+            'description'=> $request->input('description'),
+            'image' => $path,
+            'created_at' => $request->input('created_at')
+        ]);
 
-        $news->addNews($newsToAdd);
+//        $newsId = DB::table('news')->count();
 
-
-        $json = json_encode($news->getNews(), JSON_PRETTY_PRINT);
-//
-        file_put_contents('/tmp/news.json',$json);
-
-        return redirect()->route('admin.news.show',['news' => $id]);
+        return redirect()->route('admin.news.show',['news' => $newsId] );
     }
 
-    public function create() {
+    public function show(Request $request, $news) {
 
-        return view('admin.news.create');
-    }
+        $newsOne = DB::table('news')->find($news);
+        return view('admin.news.show')->with(['oneNews' => $newsOne, 'request' => $request, 'path' => $newsOne->image]);
 
-    public function show($newsId, News $news) {
-        $json = file_get_contents('/tmp/news.json');
-        $newsJson = json_decode($json, true);
-        $news->setNews($newsJson);
-        $oneNews = $news->getNews($newsId);
-
-        if ($oneNews == null) {
-            return redirect()->route('admin.news.index');
-        }
-
-        return view('admin.news.show')->with(['oneNews' => $oneNews]);
     }
 }

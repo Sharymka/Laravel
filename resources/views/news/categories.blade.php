@@ -27,15 +27,15 @@
         <div class="list-group">
             <h1>Categories</h1>
             @foreach($categories as $category)
-                <a href="{{route('news.blockOfNews', ['categorySlug' => $category['slug']])}}"
+                <a href="{{route('news.blockOfNews', ['categorySlug' => $category->title])}}"
                    class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
                     <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32"
                          class="rounded-circle flex-shrink-0">
                     <div class="d-flex gap-2 w-100 justify-content-between">
                         <div>
-                            <h6 class="mb-0">{{$category["title"]}}</h6>
+                            <h6 class="mb-0">{{$category->title}}</h6>
                         </div>
-                        <small class="opacity-50 text-nowrap">{{$category["created_at"]}}</small>
+                        <small class="opacity-50 text-nowrap">{{$category->created_at}}</small>
                         <hr>
                     </div>
                 </a>
