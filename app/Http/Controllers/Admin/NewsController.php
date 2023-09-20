@@ -44,7 +44,7 @@ class NewsController
             ->get();
         dump( $category->first()->id);
 
-        DB::table('news')->insert([
+        $newsId = DB::table('news')->insertGetId([
             'title' => $request->input('title'),
             'category_id' => $category->first()->id,
             'author' => $request->input('author'),
@@ -54,7 +54,7 @@ class NewsController
             'created_at' => $request->input('created_at')
         ]);
 
-        $newsId = DB::table('news')->count();
+//        $newsId = DB::table('news')->count();
 
         return redirect()->route('admin.news.show',['news' => $newsId] );
     }
