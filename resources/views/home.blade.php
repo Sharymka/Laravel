@@ -1,10 +1,9 @@
-
-@extends('main')
+@extends('main.main')
 
 @section('title')
-    @parent home
+    @parent welcome
 @endsection
 
 @section('content')
-<h1 style = "margin: auto">Welcome!</h1>
+    <h1 style="margin: auto">Welcome!</h1>
 @endsection

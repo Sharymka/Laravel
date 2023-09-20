@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 trait NewsTrait
 {
+    use Storage;
+
    public function createNews(int $idOneNews = null): array {
 
        $news = [];
@@ -13,19 +15,23 @@ trait NewsTrait
            for($i = 1; $i <= $quantityNews; $i++) {
                $news[$i] = [
                    'id' => $i,
-                   'name'=> \fake()->jobTitle(),
+                   'category_id' => $i,
+                   'title'=> \fake()->jobTitle(),
                    'description' => \fake()->text(100),
                    'author' => \fake()->userName(),
                    'created_at' =>now()->format('d-m-y h:i'),
-                   'isPrivate' => fake()->boolean()
+                   'isPrivate' => fake()->boolean(),
+                   'status' => 'active'
                ];
            }
-           return $news;
+           $this->setNews($news);
+
+           return $this->getNews();
        }
 
        return [
            'id' => $idOneNews,
-           'name'=> \fake()->jobTitle(),
+           'title'=> \fake()->jobTitle(),
            'description' => \fake()->text(100),
            'author' => \fake()->userName(),
            'created_at' => now()->format('d-m-y h:i'),
@@ -33,7 +39,19 @@ trait NewsTrait
        ];
    }
 
-//   public function getBlockOfNews(int $categoryId) {
-//       $this->getBlockOfNews();
-//   }
+public function createOneNews($categoryId, $title, $description) {
+
+    if($title != null && $description != null) {
+        return [
+            'id' => count($this->getNews()),
+            'title' => $title,
+            'category_id' => $categoryId,
+            'description' => $description,
+            'author' => \fake()->userName(),
+            'created_at' => now()->format('d-m-y h:i'),
+            'isPrivate' => fake()->boolean()
+        ];
+    }
+    return null;
+}
 }

@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\NewsController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,70 +16,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/hello/{name}', function (string $name): string {
-    return "Hello, {$name}";
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [ App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');
+    Route::match(['get', 'post'], '/addNews', [AdminNewsController::class, 'addNews'])->name('addNews');
+    Route::resource('/news', AdminNewsController::class);
+    Route::resource('/categories', AdminCategoryController::class);
 });
 
-//
-//Route::get('/info', function (): string {
-//    return "Страница с информацией о проекте";
-//});
-
-
-
-//
-//Route::get('/news/{id}', [
-//     \App\Http\Controllers\NewsController::class, 'news'])
-//    ->name('news')
-//    ->where('id', '\d+');
-
-Route::get('/main', [App\Http\Controllers\MainController::class, 'index'])
-    ->name('main');
-
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])
-    ->name('home');
-
-Route::get('/categories', [App\Http\Controllers\CategoriesController::class, 'categories'])
-    ->name('categories');
-
-Route::get('/blockOfNews/{categoryName}', [
-    \App\Http\Controllers\NewsController::class, 'blockOfNews'])
-    ->name('blockOfNews');
-
-Route::get('/news/showOne/{categotyName}/{newsId}', [\App\Http\Controllers\NewsController::class , 'showOne'])
-->name('showOne')->where('newsId',"\d+");
-
-//Route::get('/news/add', [
-//    'uses' => '\App\Http\Controllers\NewsController@newsAdd',
-//    'as' => 'newsAdd'
-//]);
+Route::prefix('news')->name('news.')->group(function () {
+    Route::get('/categories', [App\Http\Controllers\NewsController::class, 'newsCategories'])
+        ->name('categories');
+    Route::get('/blockOfNews/{categorySlug}', [\App\Http\Controllers\NewsController::class, 'blockOfNews'])
+        ->name('blockOfNews')->where('categorySlug',"\w+");
+    Route::get('/showOne/{categorySlug}/{newsId}', [\App\Http\Controllers\NewsController::class , 'showOne'])
+        ->name('showOne')->where('categorySlug',"\w+")->where('newsId',"\d+");
+    Route::match(['get', 'post'],'/blockOfNews/addNews', [App\Http\Controllers\NewsController::class, 'addNews'])
+        ->name('addNews');
+});
 
 Route::get('/authorization',
     [App\Http\Controllers\AuthorizationController::class, 'authorization'])
     ->name('authorization');
 
-Route::group(
-    [
-        "prefix" => "admin",
-//      "namespace" => "Admin",
-        "as" => "admin."
-    ],
-    function () {
-        Route::get('/', [
-            'uses' => 'App\Http\Controllers\Admin\IndexController@index',
-            'as' => "admin"]);
-        Route::get('/test1', [
-            'uses' => 'App\Http\Controllers\Admin\IndexController@test1',
-            'as' => 'test1']);
-        Route::get('/test2', [
-            'uses' => 'App\Http\Controllers\Admin\IndexController@test2',
-            'as' => 'test2']);
-    }
-);
 
-//Route::get('/welcome', [
-//    'uses' => "App\Http\Controllers\WelcomeController@index",
-//    'as' => 'welcome']);
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])
+    ->name('home');
+
+
 
 
 
