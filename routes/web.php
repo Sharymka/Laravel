@@ -26,10 +26,10 @@ Route::prefix('admin')->name('admin.')->group(function () {
 Route::prefix('news')->name('news.')->group(function () {
     Route::get('/categories', [App\Http\Controllers\NewsController::class, 'newsCategories'])
         ->name('categories');
-    Route::get('/blockOfNews/{categorySlug}', [\App\Http\Controllers\NewsController::class, 'blockOfNews'])
-        ->name('blockOfNews')->where('categorySlug',"\w+");
-    Route::get('/showOne/{categorySlug}/{newsId}', [\App\Http\Controllers\NewsController::class , 'showOne'])
-        ->name('showOne')->where('categorySlug',"\w+")->where('newsId',"\d+");
+    Route::get('/blockOfNews/{categoryId}', [\App\Http\Controllers\NewsController::class, 'blockOfNews'])
+        ->name('blockOfNews')->where('categoryId',"\d+");;
+    Route::get('/showOne/{categoryId}/{newsId}', [\App\Http\Controllers\NewsController::class , 'showOne'])
+        ->name('showOne')->where('categoryId',"\d+")->where('newsId',"\d+");
     Route::match(['get', 'post'],'/blockOfNews/addNews', [App\Http\Controllers\NewsController::class, 'addNews'])
         ->name('addNews');
 });

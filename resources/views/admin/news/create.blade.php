@@ -31,7 +31,7 @@
         <select style="margin-top: 30px" type="text" id="category" name="category" class="form-control"
                 placeholder="category">
             @foreach($categories as $category)
-                <option>{{$category->title}}</option>
+                <option @if($category->title == old('category')) selected @endif>{{$category->title}}</option>
             @endforeach
         </select>
         <label for="description" class="sr-only"></label>

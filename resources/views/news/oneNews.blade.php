@@ -36,7 +36,7 @@
                         <p class="mb-0 opacity-75">{{$oneNews->description}}</p>
                         <p class="mb-0 opacity-75">{{$oneNews->author}}</p>
                         <p>
-                            <a href="{{route('news.blockOfNews', ['categorySlug' => $categorySlug])}}"
+                            <a href="{{route('news.blockOfNews', ['categoryId' => $categoryId])}}"
                                class="opacity-50 text-nowrap">Назад</a>
                         </p>
                     </div>

@@ -14,7 +14,8 @@ class NewsController
 
     public function index(Request $request) {
 
-        $news = DB::table('news')->get();
+        $news = News::query()->paginate(10);
+//        $news = DB::table('news')->get();
 
 
 
@@ -34,10 +35,14 @@ class NewsController
     }
 
     public function store(Request $request) {
-        dump($request->file('image'));
-        $path = $request->file('image')->store('uploads', 'public');
+//        dump($request->file('image'));
+        $request->flash();
 
-
+        if($request->file('image')) {
+            $path = $request->file('image')->store('uploads', 'public');
+        } else {
+            $path = null;
+        }
 
         $category = DB::table('categories')
             ->where('title', '=' , $request->input('category'))
@@ -56,6 +61,14 @@ class NewsController
 
 //        $newsId = DB::table('news')->count();
 
+        $statuses = Status::getEnums();
+        $categories = DB::table('categories')->get();
+
+//        return view('admin.news.create')
+//            ->with([
+//                'request' => $request,
+//                'statuses' => $statuses,
+//                'categories' => $categories]);
         return redirect()->route('admin.news.show',['news' => $newsId] );
     }
 
