@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 trait NewsTrait
 {
-   public function getNews(int $id = null): array {
+   public function createNews(int $idOneNews = null): array {
 
        $news = [];
        $quantityNews = 10;
 
-       if($id == null) {
+       if($idOneNews == null) {
            for($i = 1; $i <= $quantityNews; $i++) {
                $news[$i] = [
                    'id' => $i,
@@ -24,7 +24,7 @@ trait NewsTrait
        }
 
        return [
-           'id' => $id,
+           'id' => $idOneNews,
            'name'=> \fake()->jobTitle(),
            'description' => \fake()->text(100),
            'author' => \fake()->userName(),
@@ -32,4 +32,8 @@ trait NewsTrait
            'isPrivate' => fake()->boolean()
        ];
    }
+
+//   public function getBlockOfNews(int $categoryId) {
+//       $this->getBlockOfNews();
+//   }
 }

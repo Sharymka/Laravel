@@ -1,7 +1,7 @@
 @extends('main')
 
 @section('title')
-    @parent newsOne
+    @parent oneNews
 @endsection
 
 @section('content')
@@ -27,14 +27,14 @@
                     <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
                     <div class="d-flex gap-2 w-100 justify-content-between">
                         <div>
-                            <h6 class="mb-0">{{$news["name"]}}</h6>
-                            <p class="mb-0 opacity-75">{{$news["description"]}}</p>
-                            <p class="mb-0 opacity-75">{{$news["author"]}}</p>
+                            <h6 class="mb-0">{{$oneNews["name"]}}</h6>
+                            <p class="mb-0 opacity-75">{{$oneNews["description"]}}</p>
+                            <p class="mb-0 opacity-75">{{$oneNews["author"]}}</p>
                                 <p>
-                                    <a href = "{{route('news')}}" class="opacity-50 text-nowrap" >Назад</a>
+                                    <a href = "{{route('blockOfNews', [$categoryName])}}" class="opacity-50 text-nowrap" >Назад</a>
                                 </p>
                         </div>
-                        <small class="opacity-50 text-nowrap">{{$news["created_at"]}}</small>
+                        <small class="opacity-50 text-nowrap">{{$oneNews["created_at"]}}</small>
                         <hr>
                     </div>
                 </div>
