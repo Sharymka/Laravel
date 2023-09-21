@@ -18,18 +18,40 @@ class CategorySeeder extends Seeder
 
     private function getCategories() {
 
-        $categories = [];
-        $quantityCategoties = 10;
-
-        for($i = 1; $i <= $quantityCategoties; $i++) {
-            $categories[$i] = [
-                'id' => $i,
-                'title'=> \fake()->jobTitle(),
+        return [
+            1=>['id' => 1,
+                'title'=> 'Sport',
+                'author' => 'Petrov Alex',
                 'description' => \fake()->text(100),
-                'created_at' =>now()->format('d-m-y h:i'),
-            ];
-        }
-        return $categories;
+                'created_at' =>now()->format('d-m-y h:i')
+                ],
+            2=>['id' => 2,
+                'title'=> 'Weather',
+                'author' => 'Sonina Maria',
+                'description' => \fake()->text(100),
+                'created_at' =>now()->format('d-m-y h:i')
+            ],
+            3=>['id' => 3,
+                'title'=> 'Politics',
+                'author' => 'Krakov Victor',
+                'description' => \fake()->text(100),
+                'created_at' =>now()->format('d-m-y h:i')
+            ],
+            4=>['id' => 4,
+                'title'=> 'Economics',
+                'author' => 'Petuhov Stanislav',
+                'description' => \fake()->text(100),
+                'created_at' =>now()->format('d-m-y h:i')
+            ],
+            5=>['id' => 5,
+                'title'=> 'Others',
+                'author' => 'Milova Anastasiya',
+                'description' => \fake()->text(100),
+                'created_at' =>now()->format('d-m-y h:i')
+            ],
+        ];
+
+
 
     }
 }

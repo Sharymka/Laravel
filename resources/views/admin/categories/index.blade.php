@@ -27,7 +27,7 @@
                     <td>{{$category->created_at}}</td>
                     <td>
                         <div class="btn-group me-2">
-                            <a type="button" class="btn btn-sm btn-outline-secondary">edit</a>
+                            <a  href="{{route('admin.categories.edit', $category)}}" type="button" class="btn btn-sm btn-outline-secondary">edit</a>
                             <a type="button" class="btn btn-sm btn-outline-secondary">delet</a>
                         </div>
                     </td>
@@ -35,6 +35,8 @@
             @endforeach
             </tbody>
         </table>
+        {{$categories->links()}}
     </div>
+
 @endsection
 

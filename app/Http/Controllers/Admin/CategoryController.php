@@ -13,7 +13,8 @@ class CategoryController extends Controller
 {
     public function index(Request $request) {
 
-        $categories = Category::all();
+        $categories = Category::query()
+        ->paginate(3);
 
 //        $categories = DB::table('categories')->get();
 
@@ -29,7 +30,7 @@ class CategoryController extends Controller
 
         $request->flash();
 
-        $data = $request->only(['title', 'description', 'created_at']);
+        $data = $request->only(['title', 'author', 'description', 'created_at']);
 
         $categories->fill($data);
 
@@ -41,6 +42,23 @@ class CategoryController extends Controller
 //        ]);
 
         return view('admin.categories.index')->with(['request'=>$request, 'categories'=> $categories]);
+    }
+
+    public function edit(Request $request, $categoryId) {
+
+        $category = Category::query()
+            ->find($categoryId);
+        return view('admin.categories.edit')->with(['request' =>$request, 'category'=> $category]);
+    }
+
+    public function update(Request $request, Category $category) {
+
+        $data = $request->only(['title', 'author', 'description', 'updated_at']);
+        dump($data);
+
+        $category->fill($data);
+
+        return redirect()->route('admin.categories.index');
     }
 
 }

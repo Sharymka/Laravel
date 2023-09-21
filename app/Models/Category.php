@@ -12,8 +12,9 @@ class Category extends Model
     protected $fillable = [
         'title',
         'author',
+        'description',
         'created_at',
-        'description'
+        'updated_at',
     ];
     public function news() {
 

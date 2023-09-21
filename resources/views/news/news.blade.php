@@ -44,6 +44,8 @@
             @empty
                 <h1>Нет новостей </h1>
             @endforelse
+            {{$blockOfNews->links()}}
         </div>
+
     </div>
 @endsection

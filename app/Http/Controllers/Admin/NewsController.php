@@ -111,6 +111,7 @@ class NewsController
 
         $data['image'] = $path;
         $news->fill($data);
+        dump($news);
 
         if($news->save()) {
             return redirect()->route('admin.news.index')->with('success', 'Запись успешно сохранена');

@@ -8,12 +8,12 @@
         {{--        <input type="hidden" id="$categoryId" name="category_id" value ="{{$categoryId}}">--}}
         <input type="hidden" id="$created_at" name="$created_at" value ="{{now()->format('y-m-d, h:i')}}">
 
-        <label for="title" class="sr-only"></label>
+        <label for="title" class="sr-only">Title</label>
         <input style="margin-top: 30px" type="text" id="title" name="title" value="{{old('title')?? $oneNews->title }}"
                class="form-control"
                placeholder="News title" required autofocus>
 
-        <label for="author" class="sr-only"></label>
+        <label for="author" class="sr-only">Author</label>
         <input style="margin-top: 30px" type="text" id="author" name="author" value="{{old('author')?? $oneNews->author }}"
                class="form-control" placeholder="author">
 
@@ -42,8 +42,8 @@
             @endforeach
         </select>
         <label for="description" class="sr-only"></label>
-        <textarea value="{{old('description')??$oneNews->description }}" style="margin-top: 30px" type="text" id="description" name="description" class="form-control"
-                  placeholder="Add news here"></textarea>
+        <textarea onfocus="{{$oneNews->description}}" style="margin-top: 30px" type="text" id="description" name="description" class="form-control"
+                  placeholder="Add news here">{{old('description')?? $oneNews->description ?? ''}}</textarea>
         <button style=" width: 140px; margin: auto; margin-top: 20px" class="btn btn-lg btn-primary btn-block"
                 type="submit">Update
         </button>

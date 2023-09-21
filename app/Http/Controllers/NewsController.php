@@ -23,12 +23,15 @@ class NewsController extends Controller
 
     public function blockOfNews(int $categoryId) {
 
-        $category = Category::query()->find($categoryId);
+        $category = Category::query()
+            ->find($categoryId);
 //        $category = DB::table('categories')->find($id);
 //        dump($category->id);
 
-        $blockOfNews = News::query()->where('category_id', '=', $category->id)->get();
-        dump($blockOfNews);
+        $blockOfNews = News::query()
+            ->where('category_id', '=', $category->id)
+            ->paginate(5);
+
 //        $blockOfNews = DB::table('news')->get()
 //            ->where('category_id', '=', $category->first()->id);
         return \view('news.news',
