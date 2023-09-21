@@ -44,14 +44,6 @@ class NewsController extends Controller
             ['oneNews' => $oneNews, 'categoryId' => $categoryId]);
 
     }
-        public function addNews(Request $request)
-        {
-            $title = $request->input('title');
-            $description = $request->input('description');
-            $category_id = $request->input('category_id');
-            $news = $this->createOneNews($category_id, $title, $description);
-            $this->setNews($news);
-            $oneNews = $this->getNews();
-            return view('oneNews', ['oneNews' => $oneNews, 'categoryId' => $category_id]);
-        }
 }
+
+

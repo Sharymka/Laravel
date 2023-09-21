@@ -11,8 +11,7 @@ use Illuminate\Routing\Route;
 class IndexController extends Controller
 {
     use NewsTrait;
-    public function index(Response $response, Request $request){
-//        view('admin.index', ['request'=> $request ]);
+    public function index(Request $request){
 
      return view('admin.index', ['request'=> $request]);
     }

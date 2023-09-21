@@ -28,10 +28,10 @@
                 <option @if(old('status') == $status) selected @endif>{{$status}}</option>
             @endforeach
         </select>
-        <select style="margin-top: 30px" type="text" id="category" name="category" class="form-control"
+        <select style="margin-top: 30px" type="text" id="category" name="category_id" class="form-control"
                 placeholder="category">
             @foreach($categories as $category)
-                <option @if($category->title == old('category')) selected @endif>{{$category->title}}</option>
+                <option value="{{$category->id}}" @if($category->title == old('category')) selected @endif>{{$category->title}}</option>
             @endforeach
         </select>
         <label for="description" class="sr-only"></label>
