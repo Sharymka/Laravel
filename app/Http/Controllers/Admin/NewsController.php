@@ -14,15 +14,22 @@ class NewsController
 
     public function index(Request $request) {
 
-        $news =  News::query()
-                ->status()
+        dump($request->has('f'));
+
+        if($request->has('f')) {
+            $news =  News::query()
+                ->where('status', '=', $request->query('f'))
                 ->orderByDesc('id')
                 ->paginate(10);
-//                ->with('category');
-//                ->get();
+        } else {
+            $news =  News::query()
+//                ->status()
+                ->orderByDesc('id')
+                ->with('category')
+                ->paginate(10);
+        }
+
 //        $news = DB::table('news')->get();
-
-
 
         return view('admin.news.index', ['news' => $news, 'request' => $request]);
     }
@@ -68,9 +75,9 @@ class NewsController
     public function show(Request $request, $newsId) {
 
 //        $oneNews = DB::table('news')->find($newsId);
-        $oneNews = News::find($newsId);
+        $news = News::find($newsId);
 
-        return view('admin.news.show')->with(['oneNews' => $oneNews, 'request' => $request, 'path' => $oneNews->image]);
+        return view('admin.news.show')->with(['oneNews' => $news, 'request' => $request]);
 
     }
 

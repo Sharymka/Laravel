@@ -11,11 +11,11 @@
                placeholder="Category title" required autofocus><br>
 
         <label for="author" class="sr-only">Author</label>
-        <input type="text" id="author" name="author" value="{{old('author')?? $category->author}}"class="form-control"
+        <input type="text" id="author" name="author" value="{{old('author')?? $category->author}}" class="form-control"
                placeholder="Category author" required autofocus><br>
 
         <label for="description" class="sr-only">Description</label>
-        <input type="text" id="description" name="description" value="{{old('description')?? $category->description}}"class="form-control"
+        <input type="text" id="description" name="description" value="{{old('description')?? $category->description}}" class="form-control"
                placeholder="Category description" required autofocus><br>
 
         <label for="updated_at" class="sr-only"></label>

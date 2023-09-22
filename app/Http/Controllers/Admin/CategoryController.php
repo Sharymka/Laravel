@@ -14,8 +14,9 @@ class CategoryController extends Controller
     public function index(Request $request) {
 
         $categories = Category::query()
-        ->paginate(3);
-
+            ->orderByDesc('id')
+            ->paginate(3);
+        dump($categories);
 //        $categories = DB::table('categories')->get();
 
         return view('admin.categories.index')->with(['categories'=> $categories, 'request'=>$request]);
@@ -32,16 +33,24 @@ class CategoryController extends Controller
 
         $data = $request->only(['title', 'author', 'description', 'created_at']);
 
-        $categories->fill($data);
+        $categories =  new Category($data);
 
-        $categories = Category::all();
+//        $categories->fill($data);
+
+//        $categories = Category::all();
 //        DB::table('categories')->insert([
 //            'title' => $request->input('title'),
 //            'description'=> $request->input('description'),
 //            'created_at' => $request->input('created_at')
 //        ]);
 
-        return view('admin.categories.index')->with(['request'=>$request, 'categories'=> $categories]);
+        if($categories->save()) {
+            return redirect()->route('admin.categories.index')->with('success', 'Запись успешно сохранена');
+        }
+
+        return back()->with('error', 'Не удалось добавить запись');
+
+//        return redirect()->route('admin.categories.index', ['request'=>$request]);
     }
 
     public function edit(Request $request, $categoryId) {
@@ -54,11 +63,16 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category) {
 
         $data = $request->only(['title', 'author', 'description', 'updated_at']);
-        dump($data);
 
         $category->fill($data);
 
-        return redirect()->route('admin.categories.index');
+        if($category->save()) {
+            return redirect()->route('admin.categories.index', ['categories'=> $category ])->with('success', 'Запись успешно сохранена');
+        }
+
+        return back()->with('error', 'Не удалось изменить запись');
+
+//        return redirect()->route('admin.categories.index');
     }
 
 }

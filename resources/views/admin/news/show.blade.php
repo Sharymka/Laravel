@@ -28,8 +28,8 @@
         <div class="list-group">
             <div href="" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
 
-               @if(@isset($path))
-                    <image  alt="twbs" width="100" height="32" class="img-fluid" src="{{asset('/storage/'.$path)}}"> </image>
+               @if(@isset($oneNews->image))
+                    <image  alt="twbs" width="100" height="32" class="img-fluid" src="{{asset('/storage/'.$oneNews->image)}}"> </image>
                     @else
                         <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32"
                               class="rounded-circle flex-shrink-0">

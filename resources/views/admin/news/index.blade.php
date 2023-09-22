@@ -2,7 +2,8 @@
 
 @section('content')
     <div style="height: 100vh !important" class="table-responsive small">
-                <x-alert type="success" message="some alert and message"></x-alert>
+{{--        @include('inc.message')--}}
+        <x-alert type ="success" :message = "{{session()->get('success')}}"></x-alert>
         <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">News</h1>
@@ -52,7 +53,7 @@
                     <td>
                         <div class="btn-group me-2">
                             <a href="{{route('admin.news.edit', $oneNews)}}" type="button" class="btn btn-sm btn-outline-secondary">edit</a>
-                            <a type="button" class="btn btn-sm btn-outline-secondary">delet</a>
+                            <a type="button" class="btn btn-sm btn-outline-secondary">delete</a>
                             <a  href="{{route('admin.news.show', $oneNews)}}"type="button" class="btn btn-sm btn-outline-secondary">show</a>
                         </div>
                     </td>
