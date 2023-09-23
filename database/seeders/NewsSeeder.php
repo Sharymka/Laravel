@@ -22,7 +22,7 @@ class NewsSeeder extends Seeder
         for($i = 1; $i <= $quantityCategoties; $i++) {
             $categories[$i] = [
                 'id' => $i,
-                'category_id' => fake()->numberBetween(1, 10),
+                'category_id' => fake()->numberBetween(1, 5),
                 'title'=> \fake()->jobTitle(),
                 'author' => \fake()->userName(),
                 'status' => Status::getEnums()[fake()->numberBetween(0,2)],

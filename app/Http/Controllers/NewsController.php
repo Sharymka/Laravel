@@ -11,43 +11,42 @@ class NewsController extends Controller
 {
     use NewsTrait;
 
-    public function newsCategories(Category $categories)
+    public function newsCategories()
     {
+        $categories = Category::query()->paginate(6);
 
-        $categories = DB::table('categories')->get();
+        dump($categories);
+//        $categories = DB::table('categories')->get();
         return view('news.categories', ['categories' => $categories]);
     }
 
 
-    public function blockOfNews(Category $categories, News $news, string $categorySlug) {
+    public function blockOfNews(int $categoryId) {
 
-        $category = DB::table('categories')
-            ->where('title', '=', $categorySlug)->get();
+        $category = Category::query()
+            ->find($categoryId);
+//        $category = DB::table('categories')->find($id);
+//        dump($category->id);
 
-        $blockOfNews = DB::table('news')->get()
-            ->where('category_id', '=', $category->first()->id);
+        $blockOfNews = News::query()
+            ->where('category_id', '=', $category->id)
+            ->paginate(5);
+
+//        $blockOfNews = DB::table('news')->get()
+//            ->where('category_id', '=', $category->first()->id);
         return \view('news.news',
-            ['blockOfNews' => $blockOfNews, 'categorySlug' => $categorySlug]);
-
-
+            ['blockOfNews' => $blockOfNews, 'categoryId' => $category->id]);
     }
 
-    public function showOne(News $news, $categorySlug, $newsId)
+    public function showOne(News $news, $categoryId, $newsId)
     {
-        $oneNews = DB::table('news')->find($newsId);
-//        dump($oneNews);
+        $oneNews = News::find($newsId);
+//        $oneNews = DB::table('news')->find($newsId);
+//        dump($oneNews->title);
         return \view('news.oneNews',
-            ['oneNews' => $oneNews, 'categorySlug' => $categorySlug]);
+            ['oneNews' => $oneNews, 'categoryId' => $categoryId]);
 
     }
-        public function addNews(Request $request)
-        {
-            $title = $request->input('title');
-            $description = $request->input('description');
-            $category_id = $request->input('category_id');
-            $news = $this->createOneNews($category_id, $title, $description);
-            $this->setNews($news);
-            $oneNews = $this->getNews();
-            return view('oneNews', ['oneNews' => $oneNews, 'categoryId' => $category_id]);
-        }
 }
+
+

@@ -27,7 +27,7 @@
         <div class="list-group">
             <h1>Categories</h1>
             @foreach($categories as $category)
-                <a href="{{route('news.blockOfNews', ['categorySlug' => $category->title])}}"
+                <a href="{{route('news.blockOfNews', ['categoryId' => $category->id])}}"
                    class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
                     <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32"
                          class="rounded-circle flex-shrink-0">
@@ -41,6 +41,8 @@
                 </a>
 
             @endforeach
+
+           {{$categories->links()}}
 {{--            <div class="container">--}}
 {{--                @include('news.addCategory')--}}
 {{--            </div>--}}

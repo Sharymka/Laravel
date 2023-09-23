@@ -14,9 +14,22 @@ class NewsController
 
     public function index(Request $request) {
 
-        $news = DB::table('news')->get();
+        dump($request->has('f'));
 
+        if($request->has('f')) {
+            $news =  News::query()
+                ->where('status', '=', $request->query('f'))
+                ->orderByDesc('id')
+                ->paginate(10);
+        } else {
+            $news =  News::query()
+//                ->status()
+                ->orderByDesc('id')
+                ->with('category')
+                ->paginate(10);
+        }
 
+//        $news = DB::table('news')->get();
 
         return view('admin.news.index', ['news' => $news, 'request' => $request]);
     }
@@ -24,7 +37,8 @@ class NewsController
     public function create(Request $request) {
 
         $statuses = Status::getEnums();
-        $categories = DB::table('categories')->get();
+        $categories = Category::all();
+//        $categories = DB::table('categories')->get();
 
         return view('admin.news.create')
             ->with([
@@ -34,35 +48,83 @@ class NewsController
     }
 
     public function store(Request $request) {
-        dump($request->file('image'));
-        $path = $request->file('image')->store('uploads', 'public');
+//        dump($request->file('image'));
+        $request->flash();
+        dump($request);
 
+        $data = $request->only(['category_id','title', 'author', 'created_at', 'description', 'status']);
 
+        if($request->file('image')) {
+            $path = $request->file('image')->store('uploads', 'public');
+        } else {
+            $path = null;
+        }
 
-        $category = DB::table('categories')
-            ->where('title', '=' , $request->input('category'))
-            ->get();
-        dump( $category->first()->id);
+        $data['image'] = $path;
 
-        $newsId = DB::table('news')->insertGetId([
-            'title' => $request->input('title'),
-            'category_id' => $category->first()->id,
-            'author' => $request->input('author'),
-            'status' => $request->input('status'),
-            'description'=> $request->input('description'),
-            'image' => $path,
-            'created_at' => $request->input('created_at')
-        ]);
+        $news = new News($data);
 
-//        $newsId = DB::table('news')->count();
+        if($news->save()) {
+            return redirect()->route('admin.news.index')->with('success', 'Запись успешно сохранена');
+        }
 
-        return redirect()->route('admin.news.show',['news' => $newsId] );
+        return back()->with('error', 'Не удалось добавить запись');
+
     }
 
-    public function show(Request $request, $news) {
+    public function show(Request $request, $newsId) {
 
-        $newsOne = DB::table('news')->find($news);
-        return view('admin.news.show')->with(['oneNews' => $newsOne, 'request' => $request, 'path' => $newsOne->image]);
+//        $oneNews = DB::table('news')->find($newsId);
+        $news = News::find($newsId);
+
+        return view('admin.news.show')->with(['oneNews' => $news, 'request' => $request]);
+
+    }
+
+    public function edit(Request $request, $newsId) {
+
+        $categories = Category::all();
+        $oneNews = News::find($newsId);
+//        $newsOne = DB::table('news')->find($newsId);
+        return view('admin.news.edit')
+            ->with([
+                'oneNews' => $oneNews,
+                'categories' => $categories,
+                'request' => $request
+            ]);
+
+    }
+
+    public function update(Request $request, News $news) {
+
+//        $request->flash();
+//        $newsOne = News::find($newsId);
+//        $categories = Category::all();
+//
+//
+//        return view('admin.news.edit')
+//            ->with([
+//                'oneNews' => $newsOne,
+//                'categories' => $categories,
+//                'request' => $request
+//            ]);
+        $data = $request->only(['category_id', 'title', 'author', 'created_at', 'description', 'status']);
+
+        if($request->file('image')) {
+            $path = $request->file('image')->store('uploads', 'public');
+        } else {
+            $path = null;
+        }
+
+        $data['image'] = $path;
+        $news->fill($data);
+        dump($news);
+
+        if($news->save()) {
+            return redirect()->route('admin.news.index')->with('success', 'Запись успешно сохранена');
+        }
+
+        return back()->with('error', 'Не удалось добавить запись');
 
     }
 }
