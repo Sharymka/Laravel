@@ -25,7 +25,8 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
     <link rel="icon" href="bootstrap-4.0.0/favicon.ico">
     <link href="/bootstrap-4.0.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/bootstrap-4.0.0/docs/4.0/examples/sign-in/sign-in.css" rel="stylesheet">
+{{--    <link href="/bootstrap-4.0.0/docs/4.0/examples/sign-in/sign-in.css" rel="stylesheet">--}}
+    <link href="/bootstrap-5.3.1/sign-in/sign-in.css" rel="stylesheet">
 </head>
 <body class="d-flex flex-column h-100">
 <x-news.layouts.header></x-news.layouts.header>

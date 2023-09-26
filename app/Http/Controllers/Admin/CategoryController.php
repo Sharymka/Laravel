@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\CategoriesTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Enums\news\Status;
+use App\Http\Requests\Admin\Categories\Create;
+use App\Http\Requests\Admin\Categories\Edit;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\Enum;
 
 class CategoryController extends Controller
 {
@@ -27,11 +31,22 @@ class CategoryController extends Controller
         return view('admin.categories.create')->with(['request'=>$request]);
     }
 
-    public function store(Request $request, Category $categories) {
+    public function store(Create $request, Category $categories) {
+
+        $request->validate([
+            'title' => ['required', 'string', 'min:3', 'max:150'],
+//            'categories_id' => ['required', 'integer', "exist:{$categories}, id"],
+            'author' => ['required', 'min:2', 'max:100'],
+            'status' => ['required', new Enum(Status::class)],
+            'image'  => ['nullable', 'image'],
+            'description' => ['nullable', 'string', 'min:3']
+        ]);
 
         $request->flash();
 
         $data = $request->only(['title', 'author', 'description', 'created_at']);
+
+
 
         $categories =  new Category($data);
 
@@ -60,7 +75,7 @@ class CategoryController extends Controller
         return view('admin.categories.edit')->with(['request' =>$request, 'category'=> $category]);
     }
 
-    public function update(Request $request, Category $category) {
+    public function update(Edit $request, Category $category) {
 
         $data = $request->only(['title', 'author', 'description', 'updated_at']);
 
