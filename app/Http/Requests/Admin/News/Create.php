@@ -24,7 +24,8 @@ class Create extends FormRequest
      */
     public function rules(): array
     {
-//        $tableNameCategory = (new Category())->getTable();
+        $tableNameCategory = (new Category())->getTable();
+        dump($tableNameCategory);
         return[
             'title' => ['required', 'string', 'min:3', 'max:150'],
 //            'categories_id' => ['required', 'integer', "exist:{$tableNameCategory}, id"],

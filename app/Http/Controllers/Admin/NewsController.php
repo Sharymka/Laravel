@@ -53,34 +53,41 @@ class NewsController
     }
 
     public function store(Create $request) {
-        dump($request);
-        dump($request->file('image'));
+
+        $tableNameCategory = (new Category())->getTable();
+        dump($tableNameCategory);
+        print ('Hello');
+//        dump($request);
+//        dump($request->file('image'));
 
 //        $tableNameCategory = (new Category())->getTable();
 //        $categories = Category::all();
-//        $request->validate([
-//            'title' => ['required', 'string', 'min:3', 'max:150'],
-////            'categories_id' => ['required', 'integer', "exist:{$categories}, id"],
-//            'author' => ['required', 'min:2', 'max:100'],
-//            'status' => ['required', new Enum(Status::class)],
-//            'image'  => ['nullable', 'image'],
-//            'description' => ['nullable', 'string', 'min:3']
+        $request->validate([
+            'title' => ['required', 'string', 'min:3', 'max:150'],
+//            'categories_id' => ['required', 'integer', "exists:{$tableNameCategory},id"],
+            'author' => ['required', 'min:2', 'max:100'],
+            'status' => ['required', new Enum(Status::class)],
+            'image'  => ['nullable', 'image', 'mimes:jpeg,bmp, png|max:1500'],
+            'description' => ['nullable', 'string', 'min:3']
+        ]);
 
-//        ]);
         $request->flash();
 //
         $data = $request->only(['category_id','title', 'author', 'created_at', 'description', 'status']);
 //
         if($request->file('image')) {
-            $path = $request->file('image')->store('uploads', 'public');
+            $path = $request->file('image')->store('news', 'public');
+//            $path = fill
         } else {
             $path = null;
         }
+        dump($path);
+        dump(Storage::url($path));
 
-        $data['image'] = $path;
+        $data['image'] = Storage::url($path);
 
         $news = new News($data);
-
+//
         if($news->save()) {
             return redirect()->route('admin.news.index')->with('success', 'Запись успешно сохранена');
         }
@@ -125,15 +132,15 @@ class NewsController
 //                'categories' => $categories,
 //                'request' => $request
 //            ]);
-        $data = $request->only(['category_id', 'title', 'author', 'created_at', 'description', 'status']);
+        $data = $request->only(['category_id', 'title', 'image', 'author', 'created_at', 'description', 'status']);
 
         if($request->file('image')) {
-            $path = $request->file('image')->store('uploads', 'public');
+            $path = $request->file('image')->store('news', 'public');
         } else {
             $path = null;
         }
 
-        $data['image'] = $path;
+        $data['image'] = Storage::url($path);
         $news->fill($data);
         dump($news);
 
