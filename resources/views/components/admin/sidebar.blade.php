@@ -25,9 +25,9 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="#">
+                    <a  href="{{route('admin.users.index')}}" class= "nav-link d-flex align-items-center gap-2" >
                         <svg class="bi"><use xlink:href="#people"/></svg>
-                        Customers
+                        Users
                     </a>
                 </li>
             </ul>

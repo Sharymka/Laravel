@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminUsersController;
 use App\Http\Controllers\Admin\NewsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
@@ -16,10 +17,11 @@ use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 |
 */
 
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'is.admin'])->group(function () {
     Route::get('/', [ App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');
     Route::match(['get', 'post'], '/addNews', [AdminNewsController::class, 'addNews'])->name('addNews');
     Route::resource('/news', AdminNewsController::class);
+    Route::resource('/users', AdminUsersController::class);
 //    Route::get('/news/index', [AdminNewsController::class, 'index'])->name('news.index');
 //    Route::get('/news/create', [AdminNewsController::class, 'create'])->name('news.create');
 //    Route::match(['get', 'post'],'/news/store', [AdminNewsController::class, 'store'])->name('news.store');
@@ -52,8 +54,8 @@ Route::get('/authorization',
     ->name('authorization');
 
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])
-    ->name('home');
+//Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])
+//    ->name('home');
 
 
 
@@ -68,3 +70,7 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])
 
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
