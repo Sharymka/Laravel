@@ -20,8 +20,6 @@ class CategoryController extends Controller
         $categories = Category::query()
             ->orderByDesc('id')
             ->paginate(3);
-        dump($categories);
-//        $categories = DB::table('categories')->get();
 
         return view('admin.categories.index')->with(['categories'=> $categories, 'request'=>$request]);
     }
@@ -31,41 +29,19 @@ class CategoryController extends Controller
         return view('admin.categories.create')->with(['request'=>$request]);
     }
 
-    public function store(Create $request, Category $categories) {
-
-        $request->validate([
-            'title' => ['required', 'string', 'min:3', 'max:150'],
-//            'categories_id' => ['required', 'integer', "exist:{$categories}, id"],
-            'author' => ['required', 'min:2', 'max:100'],
-            'status' => ['required', new Enum(Status::class)],
-            'image'  => ['nullable', 'image'],
-            'description' => ['nullable', 'string', 'min:3']
-        ]);
+    public function store(Create $request) {
 
         $request->flash();
 
         $data = $request->only(['title', 'author', 'description', 'created_at']);
 
-
-
         $categories =  new Category($data);
-
-//        $categories->fill($data);
-
-//        $categories = Category::all();
-//        DB::table('categories')->insert([
-//            'title' => $request->input('title'),
-//            'description'=> $request->input('description'),
-//            'created_at' => $request->input('created_at')
-//        ]);
 
         if($categories->save()) {
             return redirect()->route('admin.categories.index')->with('success', 'Запись успешно сохранена');
         }
 
         return back()->with('error', 'Не удалось добавить запись');
-
-//        return redirect()->route('admin.categories.index', ['request'=>$request]);
     }
 
     public function edit(Request $request, $categoryId) {
@@ -87,7 +63,6 @@ class CategoryController extends Controller
 
         return back()->with('error', 'Не удалось изменить запись');
 
-//        return redirect()->route('admin.categories.index');
     }
 
 }

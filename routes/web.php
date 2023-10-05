@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Admin\AdminUsersController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\Admin\NewsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
@@ -21,7 +21,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is.admin'])->group(
     Route::get('/', [ App\Http\Controllers\Admin\IndexController::class, 'index'])->name('index');
     Route::match(['get', 'post'], '/addNews', [AdminNewsController::class, 'addNews'])->name('addNews');
     Route::resource('/news', AdminNewsController::class);
-    Route::resource('/users', AdminUsersController::class);
+    Route::resource('/users', UsersController::class);
 //    Route::get('/news/index', [AdminNewsController::class, 'index'])->name('news.index');
 //    Route::get('/news/create', [AdminNewsController::class, 'create'])->name('news.create');
 //    Route::match(['get', 'post'],'/news/store', [AdminNewsController::class, 'store'])->name('news.store');

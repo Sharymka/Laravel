@@ -24,12 +24,11 @@ class Edit extends FormRequest
      */
     public function rules(): array
     {
-        $tableNameCategory = (new Category())->getTable();
+
         return[
             'title' => ['required', 'string', 'min:3', 'max:150'],
-//            'categories_id' => ['required', 'integer', "exist:{$tableNameCategory}, id"],
             'author' => ['required', 'min:2', 'max:100'],
-            'description' => ['nullable', 'string']
+            'description' => ['nullable', 'string', 'min:5', 'max:100']
 
         ];
     }
@@ -39,6 +38,7 @@ class Edit extends FormRequest
         return  [
             'title' => 'наименование',
             'description' => 'описание',
+            'author'=> 'автор'
         ];
     }
 }

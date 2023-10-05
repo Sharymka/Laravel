@@ -2,22 +2,22 @@
     <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#"> News Aggregator</a>
 
     <a  href=""
-        @switch($requestUri)
-            @case ('/admin')
-                {{route('home')}}
-            @break
-             @case ('/admin/news')
-                {{route('admin.index')}}
-            @break
-            @case ('/admin/news/create')
-                {{route('admin.news.index')}}
-            @break
-            @case ('/admin/news/show')
-                {{route('admin.news.create')}}
-            @break
-            @default
-             {{route('admin.index')}}
-        @endswitch
+{{--        @switch($requestUri)--}}
+{{--            @case ('/admin')--}}
+{{--                {{route('home')}}--}}
+{{--            @break--}}
+{{--             @case ('/admin/news')--}}
+{{--                {{route('admin.index')}}--}}
+{{--            @break--}}
+{{--            @case ('/admin/news/create')--}}
+{{--                {{route('admin.news.index')}}--}}
+{{--            @break--}}
+{{--            @case ('/admin/news/show')--}}
+{{--                {{route('admin.news.create')}}--}}
+{{--            @break--}}
+{{--            @default--}}
+{{--             {{route('admin.index')}}--}}
+{{--        @endswitch--}}
         class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse" >
         Назад
     </a>

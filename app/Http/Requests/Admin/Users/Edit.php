@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin\News;
+namespace App\Http\Requests\Admin\Users;
 
 use App\Http\Enums\news\Status;
 use App\Models\Category;
@@ -24,24 +24,19 @@ class Edit extends FormRequest
      */
     public function rules(): array
     {
-        $tableNameCategory = (new Category())->getTable();
         return[
-            'title' => ['required', 'string', 'min:3', 'max:150'],
-            'category_id' => "required|exists_in_database:{$tableNameCategory},id",
-            'author' => ['required', 'min:2', 'max:100'],
-            'status' => ['required', new Enum(Status::class)],
-            'image'  => ['nullable', 'image'],
-            'description' => ['nullable', 'string', 'min:5', 'max:100']
-
+            'name' => ['required', 'string', 'min:3', 'max:150'],
+            'email' => ['required', 'min:2', 'max:100'],
+            'is_admin' => 'required|integer|in:0, 1'
         ];
     }
 
     public function attributes(): array
     {
         return  [
-            'title' => 'наименование',
-            'description' => 'описание',
-            'author' => 'автор',
+            'name' => 'имя',
+            'email' => 'электронная почта',
+            'is_admin' => 'это_админ'
         ];
     }
 }
