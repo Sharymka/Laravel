@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\CategoriesTrait;
 use App\Http\Controllers\Controller;
+use App\Http\Enums\news\Status;
+use App\Http\Requests\Admin\Categories\Create;
+use App\Http\Requests\Admin\Categories\Edit;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rules\Enum;
 
 class CategoryController extends Controller
 {
@@ -16,8 +20,6 @@ class CategoryController extends Controller
         $categories = Category::query()
             ->orderByDesc('id')
             ->paginate(3);
-        dump($categories);
-//        $categories = DB::table('categories')->get();
 
         return view('admin.categories.index')->with(['categories'=> $categories, 'request'=>$request]);
     }
@@ -27,7 +29,7 @@ class CategoryController extends Controller
         return view('admin.categories.create')->with(['request'=>$request]);
     }
 
-    public function store(Request $request, Category $categories) {
+    public function store(Create $request) {
 
         $request->flash();
 
@@ -35,22 +37,11 @@ class CategoryController extends Controller
 
         $categories =  new Category($data);
 
-//        $categories->fill($data);
-
-//        $categories = Category::all();
-//        DB::table('categories')->insert([
-//            'title' => $request->input('title'),
-//            'description'=> $request->input('description'),
-//            'created_at' => $request->input('created_at')
-//        ]);
-
         if($categories->save()) {
             return redirect()->route('admin.categories.index')->with('success', 'Запись успешно сохранена');
         }
 
         return back()->with('error', 'Не удалось добавить запись');
-
-//        return redirect()->route('admin.categories.index', ['request'=>$request]);
     }
 
     public function edit(Request $request, $categoryId) {
@@ -60,7 +51,7 @@ class CategoryController extends Controller
         return view('admin.categories.edit')->with(['request' =>$request, 'category'=> $category]);
     }
 
-    public function update(Request $request, Category $category) {
+    public function update(Edit $request, Category $category) {
 
         $data = $request->only(['title', 'author', 'description', 'updated_at']);
 
@@ -72,7 +63,6 @@ class CategoryController extends Controller
 
         return back()->with('error', 'Не удалось изменить запись');
 
-//        return redirect()->route('admin.categories.index');
     }
 
 }

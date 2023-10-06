@@ -15,8 +15,6 @@ class NewsController extends Controller
     {
         $categories = Category::query()->paginate(6);
 
-        dump($categories);
-//        $categories = DB::table('categories')->get();
         return view('news.categories', ['categories' => $categories]);
     }
 
@@ -25,15 +23,11 @@ class NewsController extends Controller
 
         $category = Category::query()
             ->find($categoryId);
-//        $category = DB::table('categories')->find($id);
-//        dump($category->id);
 
         $blockOfNews = News::query()
             ->where('category_id', '=', $category->id)
             ->paginate(5);
 
-//        $blockOfNews = DB::table('news')->get()
-//            ->where('category_id', '=', $category->first()->id);
         return \view('news.news',
             ['blockOfNews' => $blockOfNews, 'categoryId' => $category->id]);
     }
@@ -41,8 +35,7 @@ class NewsController extends Controller
     public function showOne(News $news, $categoryId, $newsId)
     {
         $oneNews = News::find($newsId);
-//        $oneNews = DB::table('news')->find($newsId);
-//        dump($oneNews->title);
+
         return \view('news.oneNews',
             ['oneNews' => $oneNews, 'categoryId' => $categoryId]);
 

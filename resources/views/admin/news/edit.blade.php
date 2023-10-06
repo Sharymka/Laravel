@@ -1,6 +1,6 @@
 @extends('admin.index')
 @section('content')
-    <form action="{{route('admin.news.update', $oneNews->id)}}" method="post" enctype="multipart/form-data">
+    <form action="{{route('admin.news.update', $oneNews)}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         {{--    <input type="hidden" id="title" name="category_id" value ="{{$categoryId}}">--}}
@@ -10,16 +10,28 @@
 
         <label for="title" class="sr-only">Title</label>
         <input style="margin-top: 30px" type="text" id="title" name="title" value="{{old('title')?? $oneNews->title }}"
-               class="form-control"
+               class="form-control @error('title') is-invalid @enderror"
                placeholder="News title" required autofocus>
+        @error('title')
+            <div class="invalid-feedback">{{$message}}</div>
+        @enderror
+
 
         <label for="author" class="sr-only">Author</label>
         <input style="margin-top: 30px" type="text" id="author" name="author" value="{{old('author')?? $oneNews->author }}"
-               class="form-control" placeholder="author">
+               class="form-control @error('author') is-invalid @enderror" placeholder="author">
+        @error('author')
+            <div class="invalid-feedback">{{$message}}</div>
+        @enderror
 
         <label for="image" class="sr-only"></label>
-        <input style="margin-top: 30px" type="file" id="image" name="image" value="{{old('image')?? $oneNews->image}}"
-               class="form-control" placeholder="image">
+        <image  alt="twbs" width="50" height="15" class="img-fluid" src="{{asset($oneNews->image)}}"> </image>
+        <input style="margin-top: 30px" type="file" id="image" name="image" value="{{asset($oneNews->image)}}"
+               class="form-control @error('image') is-invalid @enderror" placeholder="image">
+             <input type="hidden" id="imageUrl" name="imageUrl" value ="{{asset($oneNews->image)}}">
+        @error('image')
+           <div class="invalid-feedback">{{$message}}</div>
+        @enderror
 
 
         <label for="status" class="sr-only"></label>
@@ -42,8 +54,12 @@
             @endforeach
         </select>
         <label for="description" class="sr-only"></label>
-        <textarea onfocus="{{$oneNews->description}}" style="margin-top: 30px" type="text" id="description" name="description" class="form-control"
-                  placeholder="Add news here">{{old('description')?? $oneNews->description ?? ''}}</textarea>
+        <textarea onfocus="{{$oneNews->description}}" style="margin-top: 30px" type="text" id="description" name="description" class="form-control @error('description') is-invalid @enderror"
+                  placeholder="Add news here">{{old('description')?? $oneNews->description ?? ''}}
+        </textarea>
+        @error('description')
+            <div class="invalid-feedback">{{$message}}</div>
+        @enderror
         <button style=" width: 140px; margin: auto; margin-top: 20px" class="btn btn-lg btn-primary btn-block"
                 type="submit">Update
         </button>

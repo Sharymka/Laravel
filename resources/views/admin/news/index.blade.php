@@ -2,8 +2,7 @@
 
 @section('content')
     <div style="height: 100vh !important" class="table-responsive small">
-{{--        @include('inc.message')--}}
-        <x-alert type ="success" :message = "{{session()->get('success')}}"></x-alert>
+        @include('inc.message')
         <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">News</h1>
@@ -36,10 +35,10 @@
             </thead>
             <tbody>
             @foreach($news as $oneNews)
-                <tr>
+                <tr id="news-{{$oneNews->id}}">
                     <td>
                         @if(@isset($oneNews->image))
-                            <image  alt="twbs" width="50" height="15" class="img-fluid" src="{{asset('/storage/'.$oneNews->image)}}"> </image>
+                            <image  alt="twbs" width="50" height="15" class="img-fluid" src="{{asset($oneNews->image)}}"> </image>
                         @else
                             <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32"
                                  class="rounded-circle flex-shrink-0">
@@ -52,9 +51,9 @@
                     <td>{{$oneNews->status}}</td>
                     <td>
                         <div class="btn-group me-2">
-                            <a href="{{route('admin.news.edit', $oneNews)}}" type="button" class="btn btn-sm btn-outline-secondary">edit</a>
-                            <a type="button" class="btn btn-sm btn-outline-secondary">delete</a>
-                            <a  href="{{route('admin.news.show', $oneNews)}}"type="button" class="btn btn-sm btn-outline-secondary">show</a>
+                            <a type="button" class="btn btn-sm btn-outline-secondary" href="{{route('admin.news.edit', $oneNews)}}">edit</a>
+                            <a type="button" class="btn btn-sm btn-outline-secondary delete" href="javascript:" rel="{{$oneNews->id}}">delete</a>
+                            <a type="button" class="btn btn-sm btn-outline-secondary" href="{{route('admin.news.show', $oneNews)}}">show</a>
                         </div>
                     </td>
                 </tr>
@@ -74,5 +73,33 @@
                 location.href = "?f=" + this.value;
             })
         })
+
+        let elements = document.querySelectorAll(".delete");
+        elements.forEach(function (element) {
+            element.addEventListener(('click'), function () {
+                const id = this.getAttribute('rel');
+                if (confirm(`Подтверждаете удаление записи с ID = ${id}`)) {
+                    send(`news/${id}`).then(() => {
+                        const news = document.getElementById(`news-${id}`);
+                        if (!news) {
+                            return;
+                        }
+
+                        news.remove();
+                    });
+                }
+            });
+        });
+
+        async function send(url) {
+            let response = await fetch(url,{
+                method: 'DELETE',
+                headers: {
+                    'x-CSRF-TOKEN':document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            });
+            let result = await response.json();
+            return result.ok;
+        }
     </script>
 @endpush
