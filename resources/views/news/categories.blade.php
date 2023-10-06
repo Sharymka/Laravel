@@ -43,9 +43,6 @@
             @endforeach
 
            {{$categories->links()}}
-{{--            <div class="container">--}}
-{{--                @include('news.addCategory')--}}
-{{--            </div>--}}
         </div>
     </div>
 @endsection
