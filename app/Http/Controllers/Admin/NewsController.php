@@ -104,25 +104,20 @@ class NewsController
         $news = News::find($newsId);
 
         $previousImagePath = $news->image;
-        dump($previousImagePath);
+
+        $newPreviousImagePath = str_replace('storage', 'public', $previousImagePath );
 
         if ($request->hasFile('image')) {
             dump('yes');
-            if ($previousImagePath) {
-                dump('yes');
-                Storage::delete($previousImagePath);
-            }
+                Storage::delete($newPreviousImagePath);
         }
+
+        $data = $request->only(['category_id', 'title', 'author', 'created_at', 'description', 'status']);
 
         if($request->file('image')) {
             $path = $request->file('image')->store('news', 'public');
-        } else {
-            $path = null;
+            $data['image'] = Storage::url($path);
         }
-
-        $data = $request->only(['category_id', 'title', 'image', 'author', 'created_at', 'description', 'status']);
-
-        $data['image'] = Storage::url($path);
 
         $news->fill($data);
 

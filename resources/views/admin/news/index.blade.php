@@ -38,7 +38,6 @@
                 <tr id="news-{{$oneNews->id}}">
                     <td>
                         @if(@isset($oneNews->image))
-                            @dump($oneNews->image)
                             <image  alt="twbs" width="50" height="15" class="img-fluid" src="{{asset($oneNews->image)}}"> </image>
                         @else
                             <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32"
