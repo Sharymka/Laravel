@@ -6,11 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Users\Edit;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 
 class UsersController extends Controller
 {
     public function index(Request $request) {
+
+        $request->flash();
 
         $users =User::all();
         return view('admin.users.index')->with(['users' => $users, 'request' => $request ]);
@@ -24,35 +28,35 @@ class UsersController extends Controller
                 'user' => $user,
                 'request'=> $request
             ]);
-
-//        $user = User::find($userId);
-//
-//        if($user->name == 'Admin') {
-//            return back()->with('error', 'Нельзя менять роль у пользователя admin');
-//        }
-//
-//        $user->is_admin? $user->is_admin = 0: $user->is_admin = 1;
-//
-//        if($user->save()) {
-//            return back()->with('success', 'Запись успешно сохранена');
-//        }
-//
-//        return back()->with('error', 'Не удалось добавить запись');
     }
 
-    public function update(Edit $request, User $user) {
+    public function update(Edit $request,  $userId) {
 
-        $data = $request->only(['name', 'email', 'is_admin']);
-        dump($data);
+        $user = User::find($userId);
 
-        $user->fill($data);
-        $user->save();
+        $request->flash();
 
-        if($user->save()) {
-            return redirect()->route('admin.users.index')->with('success', 'Запись успешно сохранена');
-        }
+        $errors = [];
 
-        return back()->with('error', 'Не удалось добавить запись');
+       if(Hash::check($request->post('password'), $user->password)) {
+           dump('yes');
+           $user->fill([
+               'name' => $request->post('name'),
+               'password' => Hash::make($request->post('newPassword')),
+               'email' => $request->post('email'),
+               'is_admin' =>  ($request->post('is_admin') == 'admin')?? false
+           ]);
+           $user->save();
+
+           Session::flash('success', 'Запись успешно сохранена');
+           return redirect()->route('admin.users.index');
+       } else {
+           $errors['password'][] = 'Введен неверный текущий пароль';
+       }
+
+        Session::flash('danger', 'Не удалось добавить запись');
+        return back()->withErrors($errors);
+
     }
 
     public function destroy(User $user) {

@@ -72,10 +72,10 @@ class NewsController
         $news = new News($data);
 
         if($news->save()) {
-            Session::put('success', 'Запись успешно сохранена');
+            Session::flash('success', 'Запись успешно сохранена');
             return redirect()->route('admin.news.index');
         }
-        Session::put('danger', 'Не удалось добавить запись');
+        Session::flash('danger', 'Не удалось добавить запись');
         return back();
 
     }

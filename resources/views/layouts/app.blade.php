@@ -19,10 +19,17 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    @if( Auth::check() && Auth::user()->is_admin == 'true')
+                        <li><a href="{{route('admin.index')}}" class="nav-link px-2 text-black">Admin</a></li>
+                    @endif()
+                    <li><a href="{{route('news.categories')}}" class="nav-link px-2 text-black ">News</a></li>
+                </ul>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>

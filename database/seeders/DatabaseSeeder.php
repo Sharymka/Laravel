@@ -27,6 +27,12 @@ class DatabaseSeeder extends Seeder
             'is_admin' => true,
             'password' => Hash::make(123)
     ]);
+        User::factory()->create([
+            'name' => 'Svetlana',
+            'email' => 'sveta@mail.ru',
+            'is_admin' => false,
+            'password' => Hash::make(123)
+        ]);
     }
 
 

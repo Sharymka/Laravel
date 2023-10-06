@@ -1,6 +1,7 @@
 @extends('admin.index')
 
 @section('content')
+    @include('inc.message')
     <div style="height: 100vh !important" class="table-responsive small">
         <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -9,6 +10,7 @@
         <table class="table table-striped table-sm">
             <thead>
             <tr>
+                <th scope="col">image</th>
                 <th scope="col">name</th>
                 <th scope="col">email</th>
                 <th scope="col">password</th>
@@ -19,7 +21,7 @@
             </thead>
             <tbody>
             @foreach($users as $oneUser)
-                <tr id="news-{{$oneUser->id}}">
+                <tr id="user-{{$oneUser->id}}">
                     <td>
                         @if(@isset($oneUser->image))
                             <image  alt="twbs" width="50" height="15" class="img-fluid" value="{{old($oneUser->image)}}" src="{{asset($oneUser->image)}}"> </image>
@@ -28,6 +30,7 @@
                                  class="rounded-circle flex-shrink-0">
                         @endif
                     </td>
+                    <td>{{$oneUser->name}}</td>
                     <td>{{$oneUser->email}}</td>
                     <td>{{$oneUser->password}}</td>
                     <td>{{$oneUser->created_at}}</td>
@@ -66,7 +69,7 @@
                 const id = this.getAttribute('rel');
                 if (confirm(`Подтверждаете удаление записи с ID = ${id}`)) {
                     send(`users/${id}`).then(() => {
-                        const user = document.getElementById(`news-${id}`);
+                        const user = document.getElementById(`user-${id}`);
                         if (!user) {
                             return;
                         }

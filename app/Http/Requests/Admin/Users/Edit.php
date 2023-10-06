@@ -27,7 +27,9 @@ class Edit extends FormRequest
         return[
             'name' => ['required', 'string', 'min:3', 'max:150'],
             'email' => ['required', 'min:2', 'max:100'],
-            'is_admin' => 'required|integer|in:0, 1'
+            'password' => ['required'],
+            'newPassword' => ['required', 'string', 'min:8'],
+            'is_admin' => 'required|string|in:user,admin'
         ];
     }
 
