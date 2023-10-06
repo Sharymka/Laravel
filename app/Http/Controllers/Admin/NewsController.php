@@ -10,6 +10,7 @@ use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Enum;
 use PHPUnit\Util\Exception;
@@ -71,10 +72,11 @@ class NewsController
         $news = new News($data);
 
         if($news->save()) {
-            return redirect()->route('admin.news.index')->with('success', 'Запись успешно сохранена');
+            Session::put('success', 'Запись успешно сохранена');
+            return redirect()->route('admin.news.index');
         }
-
-        return back()->with('error', 'Не удалось добавить запись');
+        Session::put('danger', 'Не удалось добавить запись');
+        return back();
 
     }
 

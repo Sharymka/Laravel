@@ -1,9 +1,9 @@
 
 @if(session()->has('success'))
-    <x-alert type ="success" :message = "session()->get('success')"/>
-@elseif(session()->has('error'))
-    <x-alert type ="error" :message = "session()->get('error')"/>
+    @component('components.alert', ['type'=> 'success', 'message' => session('success')])
+    @endcomponent
+@elseif(session()->has('danger'))
+    @component('components.alert', ['type'=> 'danger', 'message' => session('error')])
+    @endcomponent
 @endif
 
-{{--<h1>DDDDDDDDDDDD</h1>--}}
-{{--<x-alert type ="success" message = 'Gggggggggggg'></x-alert>--}}

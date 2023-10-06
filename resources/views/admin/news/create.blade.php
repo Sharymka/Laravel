@@ -1,28 +1,8 @@
 @extends('admin.index')
 @section('content')
     <form action="{{route('admin.news.store')}}" method="post" enctype="multipart/form-data">
-{{--        <x-alert type ="success" :message = "session()->get('success')"/>--}}
-
-{{--        <x-alert type ="success" message = "ffffffffff"/>--}}
-        <div class="alert alert-success">
-            {{session()->get('success')}}
-            {{--    <!-- The best way to take care of the future is to take care of the present moment. - Thich Nhat Hanh -->--}}
-        </div>
         @csrf
-
-{{--        @if($errors()->any())--}}
-{{--            @foreach($errors->all() as $error)--}}
-{{--                <x-alert type ="danger" :message = "$error"/>--}}
-{{--            @endforeach--}}
-{{--        @endif--}}
-
-{{--        @if ($errors->has('title'))--}}
-{{--            @foreach($errors->get('title') as $error)--}}
-{{--                {{ $error }} <br>--}}
-{{--            @endforeach--}}
-{{--        @endif--}}
         @include('inc.message')
-        {{--    <input type="hidden" id="title" name="category_id" value ="{{$categoryId}}">--}}
         <h1 style="margin-top: 30px" class="h3 mb-3 font-weight-normal">Please add news</h1>
         {{--        <input type="hidden" id="$categoryId" name="category_id" value ="{{$categoryId}}">--}}
         <input type="hidden" id="$created_at" name="$created_at" value ="{{now()->format('y-m-d, h:i')}}">
