@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SocialProvidersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -68,6 +69,9 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('/vkontakte/callback', [SocialProvidersController::class, 'callback'])
          ->name('social-providers.callback');
 });
+
+Route::get('/github/redirectToGitHub', [LoginController::class, 'redirectToGitHub']);
+Route::get('/github/callback', [LoginController::class, 'handleGitHubCallback']);
 
 Auth::routes();
 
