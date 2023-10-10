@@ -9,14 +9,14 @@ use Laravel\Socialite\Facades\Socialite;
 
 class SocialProvidersController extends Controller
 {
-    public function redirect(): RedirectResponse
+    public function redirect($provider): RedirectResponse
     {
-        return Socialite::driver('vkontakte')->redirect();
+        return Socialite::driver($provider)->redirect();
     }
 
-    public function callback(): RedirectResponse
+    public function callback($provider): RedirectResponse
     {
-        $socUser = Socialite::driver('vkontakte')->user();
+        $socUser = Socialite::driver($provider)->user();
         $user = User::where('email', '=', $socUser->getEmail())->first();
 
         if ($socUser->getAvatar()) {
@@ -27,7 +27,6 @@ class SocialProvidersController extends Controller
         Auth::login($user);
 
         return redirect()->route('home');
-//        return redirect()->route('test', ['socUser' => $user->email]);
     }
 
 //    public function callback(Social $social)

@@ -3,7 +3,6 @@
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\UsersController;
-use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\SocialProvidersController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -61,17 +60,25 @@ Route::get('/authorization',
 
 //Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])
 //    ->name('home');
+//
+//Route::group(['middleware' => 'guest'], function () {
+//    Route::get('/vkontakte/redirect', [SocialProvidersController::class, 'redirect'])
+//         ->name('social-providers.redirect');
+//
+//    Route::get('/vkontakte/callback', [SocialProvidersController::class, 'callback'])
+//         ->name('social-providers.callback');
+//});
 
 Route::group(['middleware' => 'guest'], function () {
-    Route::get('/vkontakte/redirect', [SocialProvidersController::class, 'redirect'])
+    Route::get('/{provider}/redirect', [SocialProvidersController::class, 'redirect'])
          ->name('social-providers.redirect');
 
-    Route::get('/vkontakte/callback', [SocialProvidersController::class, 'callback'])
+    Route::get('/{provider}/callback', [SocialProvidersController::class, 'callback'])
          ->name('social-providers.callback');
 });
 
-Route::get('/github/redirectToGitHub', [LoginController::class, 'redirectToGitHub']);
-Route::get('/github/callback', [LoginController::class, 'handleGitHubCallback']);
+//Route::get('/github/redirectToGitHub', [LoginController::class, 'redirectToGitHub'])->name('redirectToGitHub');
+//Route::get('/github/callback', [LoginController::class, 'handleGitHubCallback'])->name('handleGitHubCallback');
 
 Auth::routes();
 
