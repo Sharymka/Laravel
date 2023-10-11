@@ -14,7 +14,8 @@
         "laravel/ui": "^4.2",
         "orchestra/parser": "^8.0",
         "socialiteproviders/vkontakte": "^5.0",
-        "ext-xml": "*"
+        "ext-xml": "*",
+        "ext-oauth": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

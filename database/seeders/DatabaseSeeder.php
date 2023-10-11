@@ -29,13 +29,13 @@ class DatabaseSeeder extends Seeder
         ]);
         User::factory()->create([
             'name' => 'Svetlana',
-            'email' => 'sharimka89@mail.ru',
+            'email' => 'sharymka89@mail.ru',
             'is_admin' => false,
             'password' => Hash::make(123)
         ]);
         User::factory()->create([
             'name' => 'Sveta',
-            'email' => 'sveta.sharymova@gmail.com',
+            'email' => 'sveta.sharimova@gmail.com',
             'is_admin' => true,
             'password' => Hash::make(123)
         ]);

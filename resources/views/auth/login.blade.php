@@ -71,7 +71,7 @@
                                     @endif
 
                                     <a href="{{route('social-providers.redirect',[ 'provider' => 'vkontakte'])}}"
-                                       style="margin-left:150px">
+                                       class="btn btn-link" style="margin-left:150px">
                                         <svg width="30" height="30" fill="none" xmlns="http://www.w3.org/2000/svg">
                                             <path
                                                 d=" M0 12.504c0-5.43 0-8.145 1.687-9.833C3.374.984 6.09.984
@@ -88,8 +88,9 @@
                                                 fill="#000"></path>
                                         </svg>
                                     </a>
+
                                     <a href="{{route('social-providers.redirect',[ 'provider' => 'github'])}}"
-                                       style="margin-left:150px">
+                                       class="btn btn-link">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30">
                                             <path fill-rule="evenodd" clip-rule="evenodd"
                                                   transform="scale(0.3)"
@@ -97,6 +98,7 @@
                                                   fill="black"/>
                                         </svg>
                                     </a>
+
                                 </div>
 
                             </div>

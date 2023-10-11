@@ -63,7 +63,7 @@ class ParserController extends Controller
             $news->query()->insertOrIgnore([
                 'category_id' => $category->id,
                 'author' => $data['news'][$i]['author'],
-                'title' => $data['news'][$i]['category'],
+                'title' => $data['news'][$i]['title'],
                 'status' => Status::getEnums()[fake()->numberBetween(0, 2)],
                 'description' => $data['news'][$i]['description'],
                 'image' => $data['news'][$i]['enclosure::url'] ?? $data['link'] . $data['image'],

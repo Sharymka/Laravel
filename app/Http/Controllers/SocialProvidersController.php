@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Repositories\UserRepository;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
@@ -14,16 +14,21 @@ class SocialProvidersController extends Controller
         return Socialite::driver($provider)->redirect();
     }
 
-    public function callback($provider): RedirectResponse
+    public function callback($provider, UserRepository $userRepository): RedirectResponse
     {
-        $socUser = Socialite::driver($provider)->user();
-        $user = User::where('email', '=', $socUser->getEmail())->first();
+//        error_log($provider);
+//        try {
+        $socialUser = Socialite::driver($provider)->user();
+//        } catch (\Exception $e) {
+//            Log::error('Произошла ошибка: ' . $e->getMessage());
+//
+//            return redirect('/login');
+//        }
 
-        if ($socUser->getAvatar()) {
-            $user->avatar = $socUser->getAvatar();
-            $user->save();
-        }
-
+        $user = $userRepository->getUserBySocId($socialUser, $provider);
+//        $user = User::where('email', '=', $socUser->getEmail())->first();
+//        error_log($user->avatar);
+//
         Auth::login($user);
 
         return redirect()->route('home');
