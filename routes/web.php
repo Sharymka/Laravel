@@ -77,6 +77,8 @@ Route::group(['middleware' => 'guest'], function () {
          ->name('social-providers.callback');
 });
 
+Route::post('image-upload', [AdminNewsController::class, 'storeImage'])->name('image.upload');
+
 //Route::get('/github/redirectToGitHub', [LoginController::class, 'redirectToGitHub'])->name('redirectToGitHub');
 //Route::get('/github/callback', [LoginController::class, 'handleGitHubCallback'])->name('handleGitHubCallback');
 
