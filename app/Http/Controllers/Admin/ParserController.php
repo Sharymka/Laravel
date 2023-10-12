@@ -14,12 +14,19 @@ class ParserController extends Controller
 {
     public function __invoke(Request $request)
     {
-        $url = "https://lenta.ru/rss";
-        $url2 = "https://news.rambler.ru/rss/tech/";
-
         $urls = [
-            $url,
-            $url2
+            "https://lenta.ru/rss",
+            "https://news.rambler.ru/rss/tech/",
+            "https://news.rambler.ru/rss/politics/",
+            "https://news.rambler.ru/rss/community/",
+            "https://news.rambler.ru/rss/world/",
+            "https://news.rambler.ru/rss/moscow_city/",
+            "https://news.rambler.ru/rss/incidents/",
+            "https://news.rambler.ru/rss/starlife/",
+            "https://news.rambler.ru/rss/army/",
+            "https://news.rambler.ru/rss/games/",
+            "https://news.rambler.ru/rss/articles/",
+            "https://news.rambler.ru/rss/Omsk/"
         ];
         foreach ($urls as $url) {
             $xml = XmlParser::load($url);
