@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminResourcesController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\UsersController;
@@ -23,6 +24,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'is.admin'])->group(
     Route::get('/parser', \App\Http\Controllers\Admin\ParserController::class)->name('parser');
     Route::match(['get', 'post'], '/addNews', [AdminNewsController::class, 'addNews'])->name('addNews');
     Route::resource('/news', AdminNewsController::class);
+    Route::resource('/resources', AdminResourcesController::class);
     Route::get('/users/toggleAdmin/{user}', [UsersController::class, 'toggleAdmin'])->name('users.toggleAdmin');
     Route::resource('/users', UsersController::class);
 

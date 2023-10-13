@@ -51,6 +51,14 @@
                         Parser
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('admin.resources.index')}}" class="nav-link d-flex align-items-center gap-2">
+                        <svg class="bi">
+                            <use xlink:href="#people"/>
+                        </svg>
+                        Resources
+                    </a>
+                </li>
             </ul>
 
         </div>
