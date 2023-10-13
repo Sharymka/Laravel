@@ -14,7 +14,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
     <link href="{{asset('/assets/css/bootstrap.min.css')}}" rel="stylesheet">
     {{--    <script src="https://cdn.ckbox.io/ckbox/2.1.0/ckbox.js"></script>--}}
-    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
+    {{--    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>--}}
+    <script src="/assets/ckeditor5/ckeditor.js"></script>
+
+
     <style>
         .bd-placeholder-img {
             font-size: 1.125rem;
