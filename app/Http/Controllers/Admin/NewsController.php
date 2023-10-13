@@ -146,16 +146,23 @@ class NewsController
     public function storeImage(Request $request)
     {
         if ($request->hasFile('upload')) {
-            $originName = $request->file('upload')->getClientOriginalName();
-            $fileName = pathinfo($originName, PATHINFO_FILENAME);
-            $extension = $request->file('upload')->getClientOriginalExtension();
-            $fileName = $fileName . '_' . time() . '.' . $extension;
+            $file = $request->file('upload');
 
-            $request->file('upload')->move(public_path('media'), $fileName);
+            $uniqueFileName = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
 
-            $url = asset('media/' . $fileName);
+            $file->storeAs('public/news/description/', $uniqueFileName);
 
-            return response()->json(['fileName' => $fileName, 'uploaded' => 1, 'url' => $url]);
+            $url = Storage::url('Storage/public/news/description/');
+//            $originName = $request->file('upload')->getClientOriginalName();
+//            $fileName = pathinfo($originName, PATHINFO_FILENAME);
+//            $extension = $request->file('upload')->getClientOriginalExtension();
+//            $fileName = $fileName . '_' . time() . '.' . $extension;
+//
+//            $request->file('upload')->move(public_path('media'), $fileName);
+//
+//            $url = asset('media/' . $fileName);
+//
+            return response()->json(['fileName' => $uniqueFileName, 'uploaded' => 1, 'url' => $url]);
         }
     }
 }
