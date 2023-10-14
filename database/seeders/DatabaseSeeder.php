@@ -14,10 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-       $this->call([
-           CategorySeeder::class,
-            NewsSeeder::class
-    ]);
+        $this->call([
+//            CategorySeeder::class,
+//            NewsSeeder::class,
+            UrlSeeder::class
+        ]);
 
         User::factory(2)->create();
 
@@ -26,14 +27,19 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.ru',
             'is_admin' => true,
             'password' => Hash::make(123)
-    ]);
+        ]);
         User::factory()->create([
             'name' => 'Svetlana',
-            'email' => 'sveta@mail.ru',
+            'email' => 'sharymka89@mail.ru',
             'is_admin' => false,
             'password' => Hash::make(123)
         ]);
+        User::factory()->create([
+            'name' => 'Sveta',
+            'email' => 'sveta.sharimova@gmail.com',
+            'is_admin' => true,
+            'password' => Hash::make(123)
+        ]);
     }
-
 
 }

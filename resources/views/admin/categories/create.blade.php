@@ -13,27 +13,41 @@
         @enderror
 
         <label for="author" class="sr-only"></label>
-        <input style="margin-top: 30px" type="text" id="author" name="author" value="{{old('author')}}"class="form-control @error('author') is-invalid @enderror"
+        <input style="margin-top: 30px" type="text" id="author" name="author" value="{{old('author')}}"
+               class="form-control @error('author') is-invalid @enderror"
                placeholder="Category author" required autofocus>
         @error('author')
         <div class="invalid-feedback">{{$message}}</div>
         @enderror
 
         <label for="description" class="sr-only"></label>
-        <input style="margin-top: 30px" type="text" id="description" name="description" value="{{old('description')}}"class="form-control @error('description') is-invalid @enderror"
+        <input style="margin-top: 30px" type="text" id="description" name="description" value="{{old('description')}}"
+               class="form-control @error('description') is-invalid @enderror"
                placeholder="Category description" required autofocus>
         @error('description')
         <div class="invalid-feedback">{{$message}}</div>
         @enderror
 
 
-        <input style="margin-top: 30px" type="hidden" id="created_at" name="created_at" value="{{now()->format('y-m-d, h:i')}}"  class="form-control" placeholder="author">
+        <input style="margin-top: 30px" type="hidden" id="created_at" name="created_at"
+               value="{{now()->format('y-m-d, h:i')}}" class="form-control" placeholder="author">
 
         <button style=" width: 140px; margin: auto; margin-top: 20px" class="btn btn-lg btn-primary btn-block"
                 type="submit">Add
         </button>
     </form>
-
 @endsection
-
+@push('js')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#description'), {
+                ckfinder: {
+                    uploadUrl: '{{route('image.upload').'?_token='.csrf_token()}}',
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+@endpush
 
