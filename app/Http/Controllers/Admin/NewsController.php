@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\News\Create;
 use App\Http\Requests\Admin\News\Edit;
 use App\Models\Category;
 use App\Models\News;
+use App\Services\Interfaces\SaverFiles;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
@@ -18,7 +19,6 @@ class NewsController
     public function index(Request $request)
     {
         $request->flash();
-//        dump($request->has('f'));
 
         if ($request->has('f')) {
             $news = News::query()
@@ -27,13 +27,10 @@ class NewsController
                         ->paginate(10);
         } else {
             $news = News::query()
-//                ->status()
                         ->orderByDesc('id')
                         ->with('category')
                         ->paginate(10);
         }
-
-//        $news = DB::table('news')->get();
 
         return view('admin.news.index', ['news' => $news, 'request' => $request]);
     }
@@ -45,8 +42,6 @@ class NewsController
         $statuses = Status::getEnums();
         $categories = Category::all();
 
-//        $categories = DB::table('categories')->get();
-
         return view('admin.news.create')
             ->with([
                 'request' => $request,
@@ -54,21 +49,19 @@ class NewsController
                 'categories' => $categories]);
     }
 
-    public function store(Create $request)
+    public function store(Create $request, News $news, SaverFiles $saverFiles)
     {
         $request->flash();
-//
         $data = $request->only(['category_id', 'title', 'author', 'created_at', 'description', 'status']);
-//
+
         if ($request->file('image')) {
-            $path = $request->file('image')->store('news', 'public');
-        } else {
-            $path = null;
+            $file = $request->file('image');
+            $path = 'public/news/';
+            $response = $saverFiles->saveInStorage($file, $path);
+            $data['image'] = $response['url'];
         }
 
-        $data['image'] = Storage::url($path);
-
-        $news = new News($data);
+        $news->fill($data);
 
         if ($news->save()) {
             Session::flash('success', 'Запись успешно сохранена');
@@ -101,7 +94,7 @@ class NewsController
             ]);
     }
 
-    public function update(Edit $request, $newsId)
+    public function update(Edit $request, $newsId, SaverFiles $saverFiles)
     {
         $news = News::find($newsId);
 
@@ -110,15 +103,16 @@ class NewsController
         $newPreviousImagePath = str_replace('storage', 'public', $previousImagePath);
 
         if ($request->hasFile('image')) {
-            dump('yes');
             Storage::delete($newPreviousImagePath);
         }
 
         $data = $request->only(['category_id', 'title', 'author', 'created_at', 'description', 'status']);
 
         if ($request->file('image')) {
-            $path = $request->file('image')->store('news', 'public');
-            $data['image'] = Storage::url($path);
+            $file = $request->file('image');
+            $path = 'public/news/';
+            $response = $saverFiles->saveInStorage($file, $path);
+            $data['image'] = $response['url'];
         }
 
         $news->fill($data);
@@ -143,26 +137,14 @@ class NewsController
         }
     }
 
-    public function storeImage(Request $request)
+    public function storeImage(Request $request, SaverFiles $saverFiles)
     {
         if ($request->hasFile('upload')) {
             $file = $request->file('upload');
+            $path = 'public/news/description/';
+            $response = $saverFiles->saveInStorage($file, $path);
 
-            $uniqueFileName = uniqid() . '_' . time() . '.' . $file->getClientOriginalExtension();
-
-            $file->storeAs('public/news/description/', $uniqueFileName);
-
-            $url = Storage::url('Storage/public/news/description/');
-//            $originName = $request->file('upload')->getClientOriginalName();
-//            $fileName = pathinfo($originName, PATHINFO_FILENAME);
-//            $extension = $request->file('upload')->getClientOriginalExtension();
-//            $fileName = $fileName . '_' . time() . '.' . $extension;
-//
-//            $request->file('upload')->move(public_path('media'), $fileName);
-//
-//            $url = asset('media/' . $fileName);
-//
-            return response()->json(['fileName' => $uniqueFileName, 'uploaded' => 1, 'url' => $url]);
+            return response()->json(['fileName' => $response['fileName'], 'uploaded' => 1, 'url' => $response['url']]);
         }
     }
 }

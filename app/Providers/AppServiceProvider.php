@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Models\News;
 use App\Services\Interfaces\Parser;
+use App\Services\Interfaces\SaverFiles;
 use App\Services\ParseService;
+use App\Services\SaveFileService;
 use App\View\Components\Alert;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Blade;
@@ -18,8 +20,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        ;
         $this->app->bind(Parser::class, ParseService::class);
+        $this->app->bind(SaverFiles::class, SaveFileService::class);
     }
 
     /**

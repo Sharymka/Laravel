@@ -14,7 +14,6 @@ class ParserController extends Controller
     {
         $urls = Url::get()->pluck('url')->toArray();
 
-//        $urls = DB::table('resources')->pluck('url')->toArray();
         foreach ($urls as $url) {
             dispatch(new NewsParserJob($url));
         }
