@@ -14,17 +14,19 @@
         @enderror
 
         <label for="author" class="sr-only">Author</label>
-        <input type="text" id="author" name="author" value="{{old('author')?? $category->author}}" class="form-control @error('author') is-invalid @enderror"
+        <input type="text" id="author" name="author" value="{{old('author')?? $category->author}}"
+               class="form-control @error('author') is-invalid @enderror"
                placeholder="Category author" required autofocus><br>
         @error('author')
         <div class="invalid-feedback">{{$message}}</div>
         @enderror
 
         <label for="description" class="sr-only">Description</label>
-        <input type="text" id="description" name="description" value="{{old('description')?? $category->description}}" class="form-control @error('description') is-invalid @enderror"
+        <input type="text" id="description" name="description" value="{{old('description')?? $category->description}}"
+               class="form-control @error('description') is-invalid @enderror"
                placeholder="Category description" required autofocus><br>
         @error('description')
-            <div class="invalid-feedback">{{$message}}</div>
+        <div class="invalid-feedback">{{$message}}</div>
         @enderror
 
         <label for="updated_at" class="sr-only"></label>
@@ -37,6 +39,19 @@
     </form>
 
 @endsection
+@push('js')
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#description'), {
+                ckfinder: {
+                    uploadUrl: '{{route('image.upload').'?_token='.csrf_token()}}',
+                }
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+@endpush
 
 
 
