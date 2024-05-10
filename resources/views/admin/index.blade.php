@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="en" style="height: 100vh" data-bs-theme="auto">
 <head>
-    <script src="/bootstrap-5.3.1/assets/js/color-modes.js"></script>
+    <script src="public/bootstrap-5.3.1/assets/js/color-modes.js"></script>
+
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,10 +13,10 @@
     <title>Admin</title>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-    <link href="{{asset('/assets/css/bootstrap.min.css')}}" rel="stylesheet">
-    {{--    <script src="https://cdn.ckbox.io/ckbox/2.1.0/ckbox.js"></script>--}}
-    {{--    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>--}}
-    <script src="/assets/ckeditor5/ckeditor.js"></script>
+    <link href="{{asset('/public/assets/css/bootstrap.min.css')}}" rel="stylesheet">
+        <script src="https://cdn.ckbox.io/ckbox/2.1.0/ckbox.js"></script>
+        <script src="https://cdn.ckeditor.com/ckeditor5/39.0.2/classic/ckeditor.js"></script>
+    <script src="public/assets/ckeditor5/ckeditor.js"></script>
 
 
     <style>
@@ -93,7 +94,7 @@
         }
     </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="/bootstrap-5.3.1/dashboard/dashboard.css" rel="stylesheet">
+    <link href="/public/bootstrap-5.3.1/dashboard/dashboard.css" rel="stylesheet">
 </head>
 <body>
 <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -197,11 +198,11 @@
         </main>
     </div>
 </div>
-<script src={{asset('/assets/js/bootstrap.bundle.min.js')}}></script>
+<script src={{asset('/public/assets/js/bootstrap.bundle.min.js')}}></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.2.1/dist/chart.umd.min.js"
         integrity="sha384-gdQErvCNWvHQZj6XZM0dNsAoY4v+j5P1XDpNkcM3HJG1Yx04ecqIHk7+4VBOCHOG"
         crossorigin="anonymous"></script>
-<script src="/bootstrap-5.3.1/dashboard/dashboard.js"></script>
+<script src="/public/bootstrap-5.3.1/dashboard/dashboard.js"></script>
 
 @stack('js')
 </body>

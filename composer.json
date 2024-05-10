@@ -15,7 +15,8 @@
         "orchestra/parser": "^8.0",
         "socialiteproviders/vkontakte": "^5.0",
         "ext-xml": "*",
-        "ext-oauth": "*"
+        "ext-oauth": "*",
+        "ext-pdo": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

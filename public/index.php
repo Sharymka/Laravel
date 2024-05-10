@@ -52,6 +52,6 @@ $response = $kernel->handle(
     $request = Request::capture()
 )->send();
 
-dump($response);
+//dump($response);
 
 $kernel->terminate($request, $response);
